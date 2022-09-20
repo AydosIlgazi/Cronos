@@ -1,0 +1,15 @@
+﻿@using Cronos.Application.ViewModels
+@model BannerViewModel
+
+
+@foreach (var item in Model.Banners)
+{
+
+    <div class="swiper-slide">
+        @*<img src="~/assets/img/slider-02.jpg" />*@
+        <a href="@item.RedirectUrl" target="_blank">
+            <img src="@item.ImageUrl" />
+        </a>
+    </div>
+}
+
