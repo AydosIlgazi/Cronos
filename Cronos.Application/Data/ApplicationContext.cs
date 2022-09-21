@@ -8,10 +8,9 @@ namespace Cronos.Application.Data
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            //Database.EnsureCreated();
             
             //dotnet tool install --global dotnet-ef
-            //dotnet ef migrations add Init--project .\Cronos.Application - s .\Cronos.Web
+            //dotnet ef migrations add Message --project .\Cronos.Application -s .\Cronos.Web
             //dotnet ef database update --project .\Cronos.Application -s .\Cronos.Web
         }
         public DbSet<BannerEntity> Banners { get; set; }
