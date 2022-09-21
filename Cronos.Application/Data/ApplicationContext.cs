@@ -23,7 +23,7 @@ namespace Cronos.Application.Data
 
     public static class ApplicationContextExtensions
     {
-        public static IQueryable<T> ActiveEntities<T>(this DbSet<T> dbSet) where T : BaseEntity
+        public static IQueryable<T> DisplayedEntities<T>(this DbSet<T> dbSet) where T : BaseEntity
         {
             return dbSet.Where(
                     b => b.IsActive == true && b.StartDate <= DateTime.Now

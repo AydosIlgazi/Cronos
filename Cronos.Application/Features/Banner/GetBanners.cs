@@ -19,7 +19,7 @@
             public async Task<BannerViewModel> Handle(GetBannersQuery request, CancellationToken cancellationToken)
             {
 
-                var banners = await _context.Banners.ActiveEntities().ToListAsync(cancellationToken);
+                var banners = await _context.Banners.DisplayedEntities().ToListAsync(cancellationToken);
 
                 BannerViewModel bannerViewModel = new BannerViewModel()
                 {
