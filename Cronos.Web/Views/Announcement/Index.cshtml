@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Cronos.Application.ViewModels
+@model AnnouncementViewModel
+
+<div>
+    <div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <label><a class="btn btn-success">create</a></label>
+                    </th>
+                    <th>
+                        <label>Id</label>
+                    </th>
+                    <th>
+                        <label>Header</label>
+                    </th>
+                    <th>
+                        <label>Delete</label>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+               @foreach(var obj in Model.Announcements){
+                    <tr>
+                        <td width="10%"><a class="btn btn-primary">edit </a></td>
+                        <td width="10%">@obj.Id</td>
+                        <td width="70%">@obj.Header</td>
+                        <td width="10%"><a class="btn btn-danger">delete</a></td>
+                    </tr>
+               }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -14,6 +14,7 @@ namespace Cronos.Application.Data
             //dotnet ef database update --project .\Cronos.Application -s .\Cronos.Web
         }
         public DbSet<BannerEntity> Banners { get; set; }
+        public DbSet<AnnouncementEntity> Announcements { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
