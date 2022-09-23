@@ -69,5 +69,37 @@ namespace Cronos.Application.Features.Announcement
 
             }
         }
+
+        //duyurunun idsine göre getirilmesi amacıyla eklenmiştir.
+        //23.09.2022 Murat Çalışkan
+        public class GetAnnouncementByIdQuery: IRequest<AnnouncementEntity>
+        {
+            public GetAnnouncementByIdQuery(int id)
+            {
+                this.Id = id;
+            }
+
+            public int Id { get; private set; }
+        }
+
+        public class GetAnnouncementByIdHandler : IRequestHandler<GetAnnouncementByIdQuery, AnnouncementEntity>
+        {
+            private readonly ApplicationContext _context;
+
+            public GetAnnouncementByIdHandler(ApplicationContext context)
+            {
+                _context = context;
+            }
+
+            public async Task<AnnouncementEntity> Handle(GetAnnouncementByIdQuery request, CancellationToken cancellationToken)
+            {
+                var announcement = await _context.Announcements.AsNoTracking().FirstOrDefaultAsync(c => c.Id == request.Id);
+                if (announcement == null)
+                {
+                    return null;
+                }
+                return announcement;
+            }
+        }
     }
 }

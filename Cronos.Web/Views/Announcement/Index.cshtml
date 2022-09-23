@@ -10,7 +10,7 @@
             <thead>
                 <tr>
                     <th>
-                        <label><a class="btn btn-success">create</a></label>
+                        <label><a href="updateannouncement" class="btn btn-success">create</a></label>
                     </th>
                     <th>
                         <label>Id</label>
@@ -26,10 +26,10 @@
             <tbody>
                @foreach(var obj in Model.Announcements){
                     <tr>
-                        <td width="10%"><a class="btn btn-primary">edit </a></td>
+                        <td width="10%"><a asp-controller="Announcement" asp-action="UpdateAnnouncement" asp-route-id="@obj.Id" class="btn btn-primary">edit </a></td>
                         <td width="10%">@obj.Id</td>
                         <td width="70%">@obj.Header</td>
-                        <td width="10%"><a class="btn btn-danger">delete</a></td>
+                        <td width="10%"><a asp-controller="Announcement" asp-action="DeleteAnnouncement" asp-route-id="@obj.Id" class="btn btn-danger">delete</a></td>
                     </tr>
                }
             </tbody>

@@ -1,0 +1,43 @@
+﻿@using Cronos.Application.Dtos
+@model CreateAnnouncementDto
+
+<div>
+    <form method="post"  asp-route="cms/announcement/saveannouncement">
+        <div>
+            <label asp-for="@Model.Header"></label>
+            <input asp-for="@Model.Header" />
+        </div>
+        <div>
+            <label asp-for="@Model.Order"></label>
+            <input asp-for="@Model.Order" />
+        </div>
+        <div>
+            <label asp-for="@Model.RedirectUrl"></label>
+            <input asp-for="@Model.RedirectUrl" />
+        </div>
+        <div>
+            <label asp-for="@Model.ShortDescription"></label>
+            <textarea rows="2" asp-for="@Model.ShortDescription"></textarea>
+
+        </div>
+        <div>
+            <label asp-for="@Model.Description"></label>
+            <textarea rows="3" asp-for="@Model.Description" ></textarea>
+        </div>
+        <div>
+            <label asp-for="@Model.StartDate"></label>
+            <input type="date" asp-for="@Model.StartDate" />
+        </div>
+        <div>
+            <label asp-for="@Model.EndDate"></label>
+            <input type="date"  asp-for="@Model.EndDate" />
+        </div>
+        <div>
+            <label asp-for="@Model.IsActive"></label>
+            <input type="checkbox" asp-for="@Model.IsActive" />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Save </button>
+        </div>
+    </form>
+</div>
