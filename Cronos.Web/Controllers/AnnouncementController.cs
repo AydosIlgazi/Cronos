@@ -1,7 +1,9 @@
 ﻿using Cronos.Application.Dtos;
 using Cronos.Application.Entities;
 using Cronos.Application.Features.Announcement;
+using Cronos.Application.Validations.Announcement;
 using Cronos.Application.ViewModels;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -20,11 +22,12 @@ namespace Cronos.Web.Controllers
             _mediator = mediator;
         }
 
+        //read
         [Route("cms/announcement/announcementlist")]
         public async Task<IActionResult> Index()
         {
             AnnouncementViewModel viewModel = new();
-            viewModel = await _mediator.Send(new GetAnnouncementQuery());
+            viewModel = await _mediator.Send(new GetAnnouncementAdminQuery());
             return View(viewModel);
         }
 
@@ -42,8 +45,24 @@ namespace Cronos.Web.Controllers
         [Route("cms/announcement/saveannouncement")]
         public async Task<IActionResult> SaveAnnouncement([FromForm] CreateAnnouncementDto obj)
         {
-            var result = await _mediator.Send(new SaveAnnouncementCommand(obj));
-            return Redirect("announcementlist");
+            AnnouncementCreateValidator validator = new AnnouncementCreateValidator();
+            ValidationResult validationResult = validator.Validate(obj);
+            if (validationResult.IsValid)
+            {
+                var result = await _mediator.Send(new SaveAnnouncementCommand(obj));
+                TempData["success"] = "Announcement saved succesfully.";
+                return Redirect("announcementlist");
+            }
+            else
+            {
+                foreach (var item in validationResult.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                
+            }
+
+            return View();
         }
 
         //edit
@@ -59,14 +78,29 @@ namespace Cronos.Web.Controllers
         [Route("cms/announcement/updateannouncement")]
         public async Task<IActionResult> UpdateAnnouncement([FromForm] AnnouncementEntity obj)
         {
-            await _mediator.Send(new UpdateAnnouncementCommand(obj));
-            return Redirect("announcementlist");
+            AnnouncementValidator validationRules = new AnnouncementValidator();
+            ValidationResult validationResult = validationRules.Validate(obj);
+            if (validationResult.IsValid)
+            {
+                await _mediator.Send(new UpdateAnnouncementCommand(obj));
+                TempData["success"] = "Announcement updated succesfully.";
+                return Redirect("announcementlist");
+            }
+            else
+            {
+                foreach (var item in validationResult.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
         }
         //delete
         [Route("cms/announcement/deleteannouncement")]
         public async Task<IActionResult> DeleteAnnouncement(int id)
         {
             await _mediator.Send(new DeleteAnnouncementCommand(id));
+            TempData["success"] = "Announcement deleted succesfully.";
             return Redirect("announcementlist");
         }
     }

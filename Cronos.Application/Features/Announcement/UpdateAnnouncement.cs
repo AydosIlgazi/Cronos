@@ -68,7 +68,7 @@ namespace Cronos.Application.Features.Announcement
                 {
                     return null;
                 }
-                announcement.IsDeleted = true;
+                announcement.IsDeleted = !announcement.IsDeleted;
                 announcement.ModifiedDate = DateTime.Now;
                 _context.Announcements.Update(announcement);
                 await _context.SaveChangesAsync(cancellationToken);

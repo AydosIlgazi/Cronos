@@ -6,11 +6,12 @@
 
 <div>
     <div>
+        <label style="background-color:green" class="form-label notification">@TempData["success"]</label>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>
-                        <label><a href="updateannouncement" class="btn btn-success">create</a></label>
+                        <label><a asp-controller="Announcement" asp-action="SaveAnnouncement" class="btn btn-success">create</a></label>
                     </th>
                     <th>
                         <label>Id</label>
@@ -29,10 +30,24 @@
                         <td width="10%"><a asp-controller="Announcement" asp-action="UpdateAnnouncement" asp-route-id="@obj.Id" class="btn btn-primary">edit </a></td>
                         <td width="10%">@obj.Id</td>
                         <td width="70%">@obj.Header</td>
-                        <td width="10%"><a asp-controller="Announcement" asp-action="DeleteAnnouncement" asp-route-id="@obj.Id" class="btn btn-danger">delete</a></td>
+                        @if(!obj.IsDeleted){
+                            <td width="10%"><a asp-controller="Announcement" asp-action="DeleteAnnouncement" asp-route-id="@obj.Id" class="btn btn-danger">delete</a></td>
+                        }else{
+                            <td width="10%"><a asp-controller="Announcement" asp-action="DeleteAnnouncement" asp-route-id="@obj.Id" class="btn btn-primary">add</a></td>
+                        }
+                        
                     </tr>
                }
             </tbody>
         </table>
     </div>
 </div>
+
+<script>
+    const notification = document.querySelector('.notification');
+    if(notification.innerHTML != null){
+        setTimeout(()=>{
+            notification.innerHTML = "";
+        },2000)
+    }
+</script>

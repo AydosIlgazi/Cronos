@@ -101,5 +101,34 @@ namespace Cronos.Application.Features.Announcement
                 return announcement;
             }
         }
+
+        // cms ekranında tüm duyuruların listelenmesi amacıyla eklenmiştir.
+        // 26.09.2022
+        public class GetAnnouncementAdminQuery : IRequest<AnnouncementViewModel> { }
+
+        public class GetAnnouncementAdminHandler : IRequestHandler<GetAnnouncementAdminQuery, AnnouncementViewModel>
+        {
+            private readonly ApplicationContext _context;
+            private readonly IMapper _mapper;
+            public GetAnnouncementAdminHandler(ApplicationContext context, IMapper mapper)
+            {
+                _context = context;
+                _mapper = mapper;
+            }
+
+            public async Task<AnnouncementViewModel> Handle(GetAnnouncementAdminQuery request, CancellationToken cancellationToken)
+            {
+                var announcements = await _context.Announcements.ToListAsync(cancellationToken);
+
+                AnnouncementViewModel announcementViewModel = new()
+                {
+                    Announcements = _mapper.Map<List<AnnouncementDto>>(announcements)
+                };
+
+                return announcementViewModel;
+
+            }
+        }
+
     }
 }
