@@ -14,6 +14,7 @@ namespace Cronos.Application.Data
             //dotnet ef database update --project .\Cronos.Application -s .\Cronos.Web
         }
         public DbSet<BannerEntity> Banners { get; set; }
+        public DbSet<ActivityEntity> Activities { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -25,11 +26,18 @@ namespace Cronos.Application.Data
     {
         public static IQueryable<T> DisplayedEntities<T>(this DbSet<T> dbSet) where T : BaseEntity
         {
-            return dbSet.Where(
-                    b => b.IsActive == true && b.StartDate <= DateTime.Now
-                    && b.EndDate >= DateTime.Now).OrderBy(b => b.Order)
+            return dbSet
+                    //.Where(
+                    //b => b.IsActive == true && b.StartDate <= 
+                    //DateTime.Now
+                    //&& b.EndDate >= 
+                    //DateTime.Now)
+                    .Where(i => i.IsDeleted == false)
+                    .OrderBy(b => b.Order)
                     .AsQueryable();
         }
+
+       
 
     }
 }

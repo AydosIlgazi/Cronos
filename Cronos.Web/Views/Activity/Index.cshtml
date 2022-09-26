@@ -1,0 +1,35 @@
+﻿
+@using Cronos.Application.ViewModels
+@model ActivityViewModel
+
+<table class="table table-bordered">
+    <tr>
+        <th>Title</th>
+        <th>Information</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Location</th>
+        <th>Edit</th>
+        <th>Delete</th>
+
+    </tr>
+@foreach (var item in Model.Activities)
+{
+    <tr>
+            <td>@item.Title</td>
+            <td>@item.Info</td>
+            <td>@item.StartDate</td>
+            <td>@item.EndDate</td>
+            <td>null</td>
+            <td>
+                <a asp-action="Update" asp-controller="Activity" asp-route-id="@item.Id">Edit</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-controller="Activity" asp-route-id="@item.Id">Delete</a>
+            </td>
+    </tr>
+   
+}
+</table>
+
+<a asp-action="AddActivity" asp-controller="Activity" class="btn btn-primary">Add new Activity</a>

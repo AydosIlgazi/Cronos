@@ -3,6 +3,7 @@ using Cronos.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using static Cronos.Application.Features.Activity.GetActivities;
 using static Cronos.Application.Features.Banner.GetBanners;
 
 namespace Cronos.Controllers
@@ -22,10 +23,10 @@ namespace Cronos.Controllers
         {
             HomeViewModel viewModel = new HomeViewModel();
             viewModel.BannerViewModel = await _mediator.Send(new GetBannersQuery());
+            viewModel.ActivityViewModel = await _mediator.Send(new GetActivitiesQuery());
+            System.Diagnostics.Debug.WriteLine(viewModel);
             return View(viewModel);
         }
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

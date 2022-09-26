@@ -1,0 +1,16 @@
+﻿@using Cronos.Application.ViewModels
+@model ActivityViewModel
+
+
+<h2>This is activity</h2>
+@foreach(var item in Model.Activities){
+    
+    <div>
+        <div>
+            <div>@item.Title</div>
+            <div>@item.Info</div>
+            <div>@item.StartDate</div>
+            <div>@item.EndDate</div>
+        </div>
+    </div>
+}

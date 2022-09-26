@@ -1,0 +1,36 @@
+﻿@using Cronos.Application.Entities
+@model ActivityEntity
+
+<form asp-action="Update" asp-controller="Activity" method="post">
+
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input asp-for="Title" class="form-control" id="Title" />
+        <br />
+        <label for="Info">Information</label>
+        <input asp-for="Info" class="form-control" id="Info" />
+        <br />
+        <label for="Latitude">Latitude</label>
+        <input asp-for="Latitude" class="form-control" id="Latitude" />
+        <br />
+        <label for="Longitude">Longitude</label>
+        <input asp-for="Longitude" class="form-control" id="Longitude" />
+        <br />
+        <label for="StartDate">StartDate</label>
+        <input asp-for="StartDate" class="form-control" id="StartDate" />
+        <br />
+        <label for="EndDate">End Date</label>
+        <input asp-for="EndDate" class="form-control" id="EndDate" />
+        <br />
+        <label for="Order">Order</label>
+        <input asp-for="Order" class="form-control" id="Order" />
+        <br />
+        <label for="isActive">Active</label>
+        <input type="checkbox" asp-for="IsActive" class="" id="isActive" name="isActive" checked>
+        <br />
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" asp-controller="Activity" class="btn btn-danger">Cancel</a>
+</form>

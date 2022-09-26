@@ -1,0 +1,30 @@
+﻿@using Cronos.Application.Entities
+@model ActivityEntity
+
+
+
+<form asp-action="AddActivity" asp-controller="Activity" method="post">
+
+    <div class="form-group">
+        <input asp-for="Title" class="form-control" id="Title" placeholder="Title" />
+        <br />
+        <input asp-for="Info" class="form-control" id="Info" placeholder="Description" />
+        <br />
+        <input asp-for="Latitude" class="form-control" id="Latitude" placeholder="Latitude" />
+        <br />
+        <input asp-for="Longitude" class="form-control" id="Longitude" placeholder="Longitude" />
+        <br />
+        <input asp-for="StartDate" class="form-control" id="StartDate" placeholder="StartDate" />
+        <br />
+        <input asp-for="EndDate" class="form-control" id="EndDate" placeholder="EndDate" />
+        <br />
+        <input asp-for="Order" class="form-control" id="Order" placeholder="Order" />
+        <br />
+        <label for="isActive">Active</label>
+        <input type="checkbox" asp-for="IsActive" class="" id="isActive" name="isActive" checked>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" asp-controller="Activity" class="btn btn-danger">Cancel</a>
+</form>
