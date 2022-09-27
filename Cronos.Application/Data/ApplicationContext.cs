@@ -27,10 +27,14 @@ namespace Cronos.Application.Data
         public static IQueryable<T> DisplayedEntities<T>(this DbSet<T> dbSet) where T : BaseEntity
         {
             return dbSet.Where(
-                    b => b.IsActive == true && b.StartDate <= DateTime.Now
+                    b => b.IsActive == true && b.IsDeleted==false && b.StartDate <= DateTime.Now
                     && b.EndDate >= DateTime.Now).OrderBy(b => b.Order)
                     .AsQueryable();
         }
-
+        public static IQueryable<T> DisplayedEntitiesCms<T>(this DbSet<T> dbSet) where T : BaseEntity
+        {
+            return dbSet.OrderBy(b => b.Order)
+                    .AsQueryable();
+        }
     }
 }

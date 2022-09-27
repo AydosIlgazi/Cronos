@@ -4,9 +4,9 @@
 @using Cronos.Application.ViewModels
 @model AnnouncementViewModel
 
+
 <div>
     <div>
-        <label style="background-color:green" class="form-label notification">@TempData["success"]</label>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -14,7 +14,7 @@
                         <label><a asp-controller="Announcement" asp-action="SaveAnnouncement" class="btn btn-success">create</a></label>
                     </th>
                     <th>
-                        <label>Id</label>
+                        <label>Order</label>
                     </th>
                     <th>
                         <label>Header</label>
@@ -28,7 +28,7 @@
                @foreach(var obj in Model.Announcements){
                     <tr>
                         <td width="10%"><a asp-controller="Announcement" asp-action="UpdateAnnouncement" asp-route-id="@obj.Id" class="btn btn-primary">edit </a></td>
-                        <td width="10%">@obj.Id</td>
+                        <td width="10%">@obj.Order</td>
                         <td width="70%">@obj.Header</td>
                         @if(!obj.IsDeleted){
                             <td width="10%"><a asp-controller="Announcement" asp-action="DeleteAnnouncement" asp-route-id="@obj.Id" class="btn btn-danger">delete</a></td>
@@ -43,11 +43,5 @@
     </div>
 </div>
 
-<script>
-    const notification = document.querySelector('.notification');
-    if(notification.innerHTML != null){
-        setTimeout(()=>{
-            notification.innerHTML = "";
-        },2000)
-    }
-</script>
+<partial name="_Notification" />
+

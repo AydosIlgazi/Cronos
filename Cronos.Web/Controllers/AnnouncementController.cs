@@ -49,9 +49,15 @@ namespace Cronos.Web.Controllers
             ValidationResult validationResult = validator.Validate(obj);
             if (validationResult.IsValid)
             {
-                var result = await _mediator.Send(new SaveAnnouncementCommand(obj));
-                TempData["success"] = "Announcement saved succesfully.";
-                return Redirect("announcementlist");
+                bool result = await _mediator.Send(new SaveAnnouncementCommand(obj));
+                if(result == true)
+                {
+                    TempData["success"] = "Announcement saved succesfully.";
+                }
+                else
+                {
+                    TempData["error"] = "Something went wrong";
+                }
             }
             else
             {
@@ -59,9 +65,7 @@ namespace Cronos.Web.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
-                
             }
-
             return View();
         }
 
@@ -84,7 +88,6 @@ namespace Cronos.Web.Controllers
             {
                 await _mediator.Send(new UpdateAnnouncementCommand(obj));
                 TempData["success"] = "Announcement updated succesfully.";
-                return Redirect("announcementlist");
             }
             else
             {
@@ -99,9 +102,19 @@ namespace Cronos.Web.Controllers
         [Route("cms/announcement/deleteannouncement")]
         public async Task<IActionResult> DeleteAnnouncement(int id)
         {
-            await _mediator.Send(new DeleteAnnouncementCommand(id));
-            TempData["success"] = "Announcement deleted succesfully.";
+            bool result =await _mediator.Send(new DeleteAnnouncementCommand(id));
+            if(result == true)
+            {
+                TempData["success"] = "Announcement deleted succesfully.";
+            }
+            else
+            {
+                TempData["error"] = "Something went wrong";
+            }
             return Redirect("announcementlist");
         }
+
+       
+
     }
 }

@@ -10,6 +10,7 @@ namespace Cronos.Application.Dtos
     {
         public int Id { get; set; } 
         public string Header { get; set; }
+        public int Order { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

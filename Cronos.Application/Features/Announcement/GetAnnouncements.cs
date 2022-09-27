@@ -118,7 +118,7 @@ namespace Cronos.Application.Features.Announcement
 
             public async Task<AnnouncementViewModel> Handle(GetAnnouncementAdminQuery request, CancellationToken cancellationToken)
             {
-                var announcements = await _context.Announcements.ToListAsync(cancellationToken);
+                var announcements = await _context.Announcements.DisplayedEntitiesCms().ToListAsync(cancellationToken);
 
                 AnnouncementViewModel announcementViewModel = new()
                 {

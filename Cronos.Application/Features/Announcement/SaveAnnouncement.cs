@@ -9,7 +9,7 @@ namespace Cronos.Application.Features.Announcement
 {
     public class SaveAnnouncement
     {
-        public class SaveAnnouncementCommand : IRequest<CreateAnnouncementDto>
+        public class SaveAnnouncementCommand : IRequest<bool>
         {
             public SaveAnnouncementCommand(CreateAnnouncementDto obj)
             {
@@ -19,7 +19,7 @@ namespace Cronos.Application.Features.Announcement
             public CreateAnnouncementDto Obj { get; private set; }
         }
 
-        public class SaveAnnouncementHandler : IRequestHandler<SaveAnnouncementCommand, CreateAnnouncementDto>
+        public class SaveAnnouncementHandler : IRequestHandler<SaveAnnouncementCommand, bool>
         {
             private readonly ApplicationContext _context;
             private readonly IMapper _mapper;
@@ -30,14 +30,43 @@ namespace Cronos.Application.Features.Announcement
                 _mapper = mapper;
             }
 
-            public async Task<CreateAnnouncementDto> Handle(SaveAnnouncementCommand request, CancellationToken cancellationToken)
+            public async Task<bool> Handle(SaveAnnouncementCommand request, CancellationToken cancellationToken)
             {
+                bool isSameOrder = false;
                 var announcement = new AnnouncementEntity();
                 announcement = _mapper.Map(request.Obj,announcement);
-                await _context.Announcements.AddAsync(announcement);
-                await _context.SaveChangesAsync(cancellationToken);
+                // Order mantığı
+                // order sırasında aynı sırada veri bulunması durumunda eklenilecek sıradan sonraki sıralar 1 artar.
+                // 27.09.2022 Murat Çalışkan
+                List<AnnouncementEntity> entities = await _context.Announcements.ToListAsync();
+                foreach (var item in entities)
+                {
+                    if (item.Order == announcement.Order)
+                    {
+                        isSameOrder = true;
+                    }
+                }
+                if (isSameOrder == true)
+                {
+                    foreach (var item in entities)
+                    {
+                        if (item.Order >= announcement.Order)
+                        {
+                            item.Order++;
+                        }
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                // order mantığı sonu
 
-                return request.Obj;
+                await _context.Announcements.AddAsync(announcement);
+                var result = await _context.SaveChangesAsync(cancellationToken);
+                if(result == 0)
+                {
+                    return false;
+                }
+                
+                return true;
             }
         }
 

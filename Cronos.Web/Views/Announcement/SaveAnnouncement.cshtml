@@ -30,12 +30,12 @@
         </div>
         <div>
             <label class="form-label" asp-for="@Model.StartDate"></label>
-            <input type="date" class="form-control" asp-for="@Model.StartDate" />
+            <input type="datetime-local" class="form-control" asp-for="@Model.StartDate" />
             <span class="text-danger">@Html.ValidationMessageFor(x => x.StartDate)</span>
         </div>
         <div>
             <label class="form-label" asp-for="@Model.EndDate"></label>
-            <input type="date" class="form-control" asp-for="@Model.EndDate" />
+            <input type="datetime-local" class="form-control" asp-for="@Model.EndDate" />
             <span class="text-danger">@Html.ValidationMessageFor(x => x.EndDate)</span>
         </div>
         <div>
@@ -48,16 +48,10 @@
         </div>
     </form>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal1">Modal deneme</button>
 
-    <div class="modal" id="Modal1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">saved</h2>
-                    <button class="btn btn-primary">Okay</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+    
 </div>
+
+
+<partial name="_Notification" />
