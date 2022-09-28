@@ -8,10 +8,8 @@ namespace Cronos.Application.Mapping
             CreateMap<BannerEntity, BannerDto>();
             CreateMap<AnnouncementEntity, AnnouncementDto>();
             CreateMap<AnnouncementEntity, AnnouncementCardDto>();
-            CreateMap<AnnouncementEntity, CreateAnnouncementDto>();
-            CreateMap<CreateAnnouncementDto, AnnouncementEntity>();
-            CreateMap<UpdateAnnouncementDto, AnnouncementEntity>();
-            CreateMap<AnnouncementEntity, UpdateAnnouncementDto> ();
+            CreateMap<AnnouncementEntity, CreateAnnouncementDto>().ReverseMap();
+            CreateMap<UpdateAnnouncementDto, AnnouncementEntity>().ReverseMap();
         }
     }
 }

@@ -1,49 +1,49 @@
-﻿@using Cronos.Application.Dtos
-@model UpdateAnnouncementDto
+﻿@using Cronos.Application.ViewModels
+@model AnnouncementUpdateViewModel
 
 <div>
     <form method="post" asp-route="cms/announcement/saveannouncement">
-        <input asp-for="@Model.Id" hidden />
-        <input asp-for="@Model.CreatedDate" hidden />
+        <input asp-for="@Model.Announcement.Id" hidden />
+        <input asp-for="@Model.Announcement.CreatedDate" hidden />
         <div>
-            <label class="form-label" asp-for="@Model.Header"></label>
-            <input class="form-control" asp-for="@Model.Header" />
-            <span class="text-danger">@Html.ValidationMessageFor(x => x.Header)</span>
+            <label class="form-label" asp-for="@Model.Announcement.Header"></label>
+            <input class="form-control" asp-for="@Model.Announcement.Header" />
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.Announcement.Header)</span>
         </div>
         <div>
-            <label class="form-label" asp-for="@Model.Order"></label>
-            <input class="form-control" asp-for="@Model.Order" />
-            <span class="text-danger">@Html.ValidationMessageFor(x => x.Order)</span>
+            <label class="form-label" asp-for="@Model.Announcement.Order"></label>
+            <input class="form-control" asp-for="@Model.Announcement.Order" />
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.Announcement.Order)</span>
         </div>
         <div>
-            <label class="form-label" asp-for="@Model.RedirectUrl"></label>
-            <input class="form-control" asp-for="@Model.RedirectUrl" />
-            <span class="text-danger">@Html.ValidationMessageFor(x => x.RedirectUrl)</span>
+            <label class="form-label" asp-for="@Model.Announcement.RedirectUrl"></label>
+            <input class="form-control" asp-for="@Model.Announcement.RedirectUrl" />
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.Announcement.RedirectUrl)</span>
         </div>
         <div>
-            <label class="form-label" asp-for="@Model.ShortDescription"></label>
-            <textarea class="form-control" rows="2" asp-for="@Model.ShortDescription"></textarea>
-            <span class="text-danger">@Html.ValidationMessageFor(x => x.ShortDescription)</span>
+            <label class="form-label" asp-for="@Model.Announcement.ShortDescription"></label>
+            <textarea class="form-control" rows="2" asp-for="@Model.Announcement.ShortDescription"></textarea>
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.Announcement.ShortDescription)</span>
 
         </div>
         <div>
-            <label class="form-label" asp-for="@Model.Description"></label>
-            <textarea class="form-control" rows="3" asp-for="@Model.Description"></textarea>
-            <span class="text-danger">@Html.ValidationMessageFor(x => x.Description)</span>
+            <label class="form-label" asp-for="@Model.Announcement.Description"></label>
+            <textarea class="form-control" rows="3" asp-for="@Model.Announcement.Description"></textarea>
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.Announcement.Description)</span>
         </div>
         <div>
-            <label class="form-label" asp-for="@Model.StartDate"></label>
-            <input class="form-control" type="datetime-local" asp-for="@Model.StartDate" />
-            <span class="text-danger">@Html.ValidationMessageFor(x => x.StartDate)</span>
+            <label class="form-label" asp-for="@Model.Announcement.StartDate"></label>
+            <input class="form-control" type="datetime-local" asp-for="@Model.Announcement.StartDate" />
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.Announcement.StartDate)</span>
         </div>
         <div>
-            <label class="form-label" asp-for="@Model.EndDate"></label>
-            <input class="form-control" type="datetime-local" asp-for="@Model.EndDate" />
-            <span class="text-danger">@Html.ValidationMessageFor(x => x.EndDate)</span>
+            <label class="form-label" asp-for="@Model.Announcement.EndDate"></label>
+            <input class="form-control" type="datetime-local" asp-for="@Model.Announcement.EndDate" />
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.Announcement.EndDate)</span>
         </div>
         <div>
-            <label class="form-label" asp-for="@Model.IsActive"></label>
-            <input type="checkbox" asp-for="@Model.IsActive" />
+            <label class="form-label" asp-for="@Model.Announcement.IsActive"></label>
+            <input type="checkbox" asp-for="@Model.Announcement.IsActive" />
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Save </button>

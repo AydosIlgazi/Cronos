@@ -74,19 +74,19 @@ namespace Cronos.Web.Controllers
         [Route("cms/announcement/updateannouncement")]
         public async Task<IActionResult> UpdateAnnouncement(int id)
         {
-            UpdateAnnouncementDto entity = await _mediator.Send(new GetAnnouncementByIdQuery(id));
+            AnnouncementUpdateViewModel entity = await _mediator.Send(new GetAnnouncementByIdQuery(id));
             return View(entity);
         }
 
         [HttpPost]
         [Route("cms/announcement/updateannouncement")]
-        public async Task<IActionResult> UpdateAnnouncement([FromForm] UpdateAnnouncementDto obj)
+        public async Task<IActionResult> UpdateAnnouncement([FromForm] AnnouncementUpdateViewModel obj)
         {
             AnnouncementValidator validationRules = new AnnouncementValidator();
-            ValidationResult validationResult = validationRules.Validate(obj);
+            ValidationResult validationResult = validationRules.Validate(obj.Announcement);
             if (validationResult.IsValid)
             {
-                await _mediator.Send(new UpdateAnnouncementCommand(obj));
+                await _mediator.Send(new UpdateAnnouncementCommand(obj.Announcement));
                 TempData["success"] = "Announcement updated succesfully.";
             }
             else
