@@ -53,6 +53,7 @@ namespace Cronos.Web.Controllers
                 if(result == true)
                 {
                     TempData["success"] = "Announcement saved succesfully.";
+                    TempData["controller"] = "Announcement";
                 }
                 else
                 {
@@ -86,8 +87,17 @@ namespace Cronos.Web.Controllers
             ValidationResult validationResult = validationRules.Validate(obj.Announcement);
             if (validationResult.IsValid)
             {
-                await _mediator.Send(new UpdateAnnouncementCommand(obj.Announcement));
-                TempData["success"] = "Announcement updated succesfully.";
+                bool result =await _mediator.Send(new UpdateAnnouncementCommand(obj.Announcement));
+                if(result == true)
+                {
+                    TempData["success"] = "Announcement updated succesfully.";
+                    TempData["controller"] = "Announcement";
+                }
+                else
+                {
+                    TempData["error"] = "something went wrong";
+                }
+               
             }
             else
             {
@@ -106,6 +116,7 @@ namespace Cronos.Web.Controllers
             if(result == true)
             {
                 TempData["success"] = "Announcement updated succesfully.";
+                    TempData["controller"] = "Announcement";
             }
             else
             {

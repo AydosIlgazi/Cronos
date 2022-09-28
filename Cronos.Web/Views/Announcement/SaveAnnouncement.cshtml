@@ -2,7 +2,7 @@
 @model CreateAnnouncementDto
 
 <div>
-    <form method="post"  asp-route="cms/announcement/saveannouncement">
+    <form method="post" asp-controller="Announcement" asp-action="SaveAnnouncement">
         <div>
             <label class="form-label"asp-for="@Model.Header"></label>
             <input class="form-control" asp-for="@Model.Header" />

@@ -24,7 +24,7 @@
     <div class="modal">
         <div class="modal_content">
             <p>@TempData["success"]</p>
-            <a asp-controller="Announcement" asp-action="Index" class="btn btn-primary">Okay</a>
+            <a asp-controller="@TempData["controller"]" asp-action="Index" class="btn btn-primary">Okay</a>
         </div>
     </div>
 }

@@ -2,7 +2,7 @@
 @model AnnouncementUpdateViewModel
 
 <div>
-    <form method="post" asp-route="cms/announcement/saveannouncement">
+    <form method="post" asp-controller="Announcement" asp-action="UpdateAnnouncement" >
         <input asp-for="@Model.Announcement.Id" hidden />
         <input asp-for="@Model.Announcement.CreatedDate" hidden />
         <div>
