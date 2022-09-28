@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cronos.Application.Features.Activity
 {
-    public class UpdateActivityCommand : IRequest<ActivityEntity>
+    public class UpdateActivityCommand : IRequest<bool>
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -18,30 +18,29 @@ namespace Cronos.Application.Features.Activity
         public bool IsDeleted { get; set; }
         public string Title { get; set; }
         public string Info { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public string locationUrl { get; set; }
 
-        public class UpdateActivityHandler : IRequestHandler<UpdateActivityCommand, ActivityEntity>
+        public class UpdateActivityHandler : IRequestHandler<UpdateActivityCommand, bool>
         {
+
             public readonly ApplicationContext _context;
             public UpdateActivityHandler(ApplicationContext context)
             {
                 _context = context;
             }
-    
-            public async Task<ActivityEntity> Handle(UpdateActivityCommand request, CancellationToken cancellationToken)
+            
+            public async Task<bool> Handle(UpdateActivityCommand request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Activities.Where(x => x.Id == request.Id).FirstOrDefaultAsync();
+                var activity = await _context.Activities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                if(activity == null)
+                if (activity == null)
                 {
-                    return default;
+                    return false;
                 }
-                else
-                {
+                
                     activity.Id = request.Id;
                     activity.CreatedDate = request.CreatedDate;
-                    activity.ModifiedDate = request.ModifiedDate;
+                    activity.ModifiedDate = DateTime.Now;
                     activity.StartDate = request.StartDate;
                     activity.EndDate = request.EndDate;
                     activity.Order = request.Order;
@@ -49,16 +48,18 @@ namespace Cronos.Application.Features.Activity
                     activity.IsDeleted = request.IsDeleted;
                     activity.Title = request.Title;
                     activity.Info = request.Info;
-                    activity.Latitude = request.Latitude;
-                    activity.Longitude = request.Longitude;
+                    activity.locationUrl = request.locationUrl;
 
-                    await _context.SaveChangesAsync();
-                    return activity;
+                    _context.Activities.Update(activity);
+                   await _context.SaveChangesAsync(cancellationToken);
+                return true;
+                    
 
-                }
-
-
+                
             }
         }
+
     }
+
+    
 }

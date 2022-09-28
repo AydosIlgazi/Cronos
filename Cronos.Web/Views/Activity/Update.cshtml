@@ -4,29 +4,34 @@
 <form asp-action="Update" asp-controller="Activity" method="post">
 
     <div class="form-group">
+        @Html.HiddenFor(m => m.Id)
+        
         <label for="Title">Title</label>
         <input asp-for="Title" class="form-control" id="Title" />
+        @Html.ValidationMessageFor(model => model.Title)
         <br />
         <label for="Info">Information</label>
         <input asp-for="Info" class="form-control" id="Info" />
+        @Html.ValidationMessageFor(model => model.Info)
         <br />
-        <label for="Latitude">Latitude</label>
-        <input asp-for="Latitude" class="form-control" id="Latitude" />
-        <br />
-        <label for="Longitude">Longitude</label>
-        <input asp-for="Longitude" class="form-control" id="Longitude" />
+        <label for="locationUrl">Location Url</label>
+        <input asp-for="locationUrl" class="form-control" id="locationUrl" />
+        @Html.ValidationMessageFor(model => model.locationUrl)
         <br />
         <label for="StartDate">StartDate</label>
         <input asp-for="StartDate" class="form-control" id="StartDate" />
+        @Html.ValidationMessageFor(model => model.StartDate)
         <br />
         <label for="EndDate">End Date</label>
         <input asp-for="EndDate" class="form-control" id="EndDate" />
+        @Html.ValidationMessageFor(model => model.EndDate)
         <br />
         <label for="Order">Order</label>
         <input asp-for="Order" class="form-control" id="Order" />
+        @Html.ValidationMessageFor(model => model.Order)
         <br />
         <label for="isActive">Active</label>
-        <input type="checkbox" asp-for="IsActive" class="" id="isActive" name="isActive" checked>
+        <input type="checkbox" asp-for="IsActive" class="" id="isActive"  >
         <br />
     </div>
 
@@ -34,3 +39,43 @@
     <button type="submit" class="btn btn-success">Save</button>
     <a asp-action="Index" asp-controller="Activity" class="btn btn-danger">Cancel</a>
 </form>
+@if (TempData["success"] != null)
+{
+    <div class="modal">
+        <div class="modal_content">
+            <p>@TempData["success"]</p>
+            <a asp-controller="Activity" asp-action="Index" class="btn btn-primary">Okay</a>
+        </div>
+    </div>
+}
+@if (TempData["success"] != null)
+{
+    <script type="text/javascript">
+        const modal = document.querySelector(".modal")
+        window.onload = () => {
+            modal.style.display = "block";
+        }
+    </script>
+}
+
+<style type="text/css">
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.25);
+    }
+
+    .modal_content {
+        background-color: white;
+        position: absolute;
+        top: 20%;
+        left: 30%;
+        width: 40%;
+        padding: 20px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+</style>

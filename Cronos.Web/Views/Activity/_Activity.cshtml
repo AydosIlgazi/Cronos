@@ -2,7 +2,6 @@
 @model ActivityViewModel
 
 
-<h2>This is activity</h2>
 @foreach(var item in Model.Activities){
     
     <div>
@@ -11,6 +10,9 @@
             <div>@item.Info</div>
             <div>@item.StartDate</div>
             <div>@item.EndDate</div>
+            <a href="@item.locationUrl">see location</a>
+            <a href="#">Devamı..</a>
+
         </div>
     </div>
 }

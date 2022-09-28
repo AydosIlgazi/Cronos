@@ -9,6 +9,9 @@
         <th>Start Date</th>
         <th>End Date</th>
         <th>Location</th>
+        <th>Order</th>
+        <th>isDelete</th>
+        <th>isActive</th>
         <th>Edit</th>
         <th>Delete</th>
 
@@ -20,13 +23,24 @@
             <td>@item.Info</td>
             <td>@item.StartDate</td>
             <td>@item.EndDate</td>
-            <td>null</td>
+            <td>@item.locationUrl</td>
+            <td>@item.Order</td>
+            <td>@item.IsDeleted</td>
+            <td>@item.IsActive</td>
+
             <td>
                 <a asp-action="Update" asp-controller="Activity" asp-route-id="@item.Id">Edit</a>
             </td>
+            @if(!item.IsDeleted){
             <td>
                 <a asp-action="Delete" asp-controller="Activity" asp-route-id="@item.Id">Delete</a>
             </td>
+            }else{
+                <td>
+                <a asp-action="Delete" asp-controller="Activity" asp-route-id="@item.Id">Add</a>
+                </td>
+
+            }
     </tr>
    
 }

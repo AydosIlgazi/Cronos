@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cronos.Application.Features.Activity
 {
-    public  class AddActivityCommand : IRequest<ActivityEntity>
+    public  class AddActivityCommand : IRequest<bool>
     {
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -18,26 +18,27 @@ namespace Cronos.Application.Features.Activity
         public bool IsDeleted { get; set; }
         public string Title { get; set; }
         public string Info { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public string locationUrl { get; set; }
 
-        public class AddActivityCommandHandler : IRequestHandler<AddActivityCommand, ActivityEntity>
+
+        public class AddActivityCommandHandler : IRequestHandler<AddActivityCommand, bool>
         {
+
             public readonly ApplicationContext _context;
 
             public AddActivityCommandHandler(ApplicationContext context)
             {
                 _context = context;
             }
-              
-            public async Task<ActivityEntity> Handle(AddActivityCommand request, CancellationToken cancellationToken)
+
+            
+            public async Task<bool> Handle(AddActivityCommand request, CancellationToken cancellationToken)
             {
                 var activity = new ActivityEntity();
                 activity.Title = request.Title;
-                activity.Longitude = request.Longitude;
-                activity.Latitude = request.Latitude;
-                activity.StartDate = request.StartDate; 
+                activity.StartDate = request.StartDate;
                 activity.EndDate = request.EndDate;
+                activity.locationUrl = request.locationUrl;
                 activity.CreatedDate = DateTime.Now;
                 activity.ModifiedDate = DateTime.Now;
                 activity.Info = request.Info;
@@ -48,8 +49,7 @@ namespace Cronos.Application.Features.Activity
                 _context.Activities.Add(activity);
                 await _context.SaveChangesAsync();
 
-                return activity;
-
+                return true;
             }
         }
     }

@@ -7,23 +7,30 @@ using System.Threading.Tasks;
 
 namespace Cronos.Application.Features.Activity
 {
-    public class DeleteActivityCommand : IRequest<ActivityEntity>
+    public class DeleteActivityCommand : IRequest<bool>
     {
         public int Id { get; set; } 
-        public bool isDeleted { get; set; }
-        public class DeleteActivityCommandHandler : IRequestHandler<DeleteActivityCommand, ActivityEntity>
+        
+        public class DeleteActivityCommandHandler : IRequestHandler<DeleteActivityCommand, bool>
         {
             private readonly ApplicationContext _context;
             public DeleteActivityCommandHandler(ApplicationContext context)
             {
-                _context = context; 
+                _context = context;
             }
-            public async Task<ActivityEntity> Handle(DeleteActivityCommand request, CancellationToken cancellationToken)
+          
+            public async Task<bool> Handle(DeleteActivityCommand request, CancellationToken cancellationToken)
             {
                 var activity = await _context.Activities.Where(x => x.Id == request.Id).FirstOrDefaultAsync();
-                activity.IsDeleted = true;
-                await _context.SaveChangesAsync();
-                return activity;
+                if (activity == null)
+                {
+                    return false;
+                }
+                activity.IsDeleted = !activity.IsDeleted;
+                activity.ModifiedDate = DateTime.Now;
+                _context.Activities.Update(activity);
+                await _context.SaveChangesAsync(cancellationToken);
+                return true;
             }
         }
     }

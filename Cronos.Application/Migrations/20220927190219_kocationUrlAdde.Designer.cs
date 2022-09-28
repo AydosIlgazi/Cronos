@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cronos.Application.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220922202607_Activities")]
-    partial class Activities
+    [Migration("20220927190219_kocationUrlAdde")]
+    partial class kocationUrlAdde
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,12 +48,6 @@ namespace Cronos.Application.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime2");
 
@@ -65,6 +59,9 @@ namespace Cronos.Application.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("locationUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

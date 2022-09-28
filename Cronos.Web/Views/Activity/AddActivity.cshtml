@@ -7,18 +7,25 @@
 
     <div class="form-group">
         <input asp-for="Title" class="form-control" id="Title" placeholder="Title" />
+        <span asp-validation-for="Title"></span>
+       
         <br />
         <input asp-for="Info" class="form-control" id="Info" placeholder="Description" />
+        <span asp-validation-for="Info"></span>
+  
         <br />
-        <input asp-for="Latitude" class="form-control" id="Latitude" placeholder="Latitude" />
-        <br />
-        <input asp-for="Longitude" class="form-control" id="Longitude" placeholder="Longitude" />
+        <input asp-for="locationUrl" class="form-control" id="locationUrl" placeholder="Location Url" />
+        <span asp-validation-for="locationUrl"></span>
+        
         <br />
         <input asp-for="StartDate" class="form-control" id="StartDate" placeholder="StartDate" />
+        <span asp-validation-for="StartDate"></span>
         <br />
         <input asp-for="EndDate" class="form-control" id="EndDate" placeholder="EndDate" />
+        <span asp-validation-for="EndDate"></span>
         <br />
         <input asp-for="Order" class="form-control" id="Order" placeholder="Order" />
+        <span asp-validation-for="Order"></span>
         <br />
         <label for="isActive">Active</label>
         <input type="checkbox" asp-for="IsActive" class="" id="isActive" name="isActive" checked>
@@ -28,3 +35,48 @@
     <button type="submit" class="btn btn-success">Save</button>
     <a asp-action="Index" asp-controller="Activity" class="btn btn-danger">Cancel</a>
 </form>
+
+
+@if (TempData["success"] != null)
+{
+    <div class="modal">
+        <div class="modal_content">
+            <p>@TempData["success"]</p>
+            <a asp-controller="Activity" asp-action="Index" class="btn btn-primary">Okay</a>
+        </div>
+    </div>
+}
+@if (TempData["success"] != null)
+{
+    <script type="text/javascript">
+        const modal = document.querySelector(".modal")
+        window.onload = () => {
+            modal.style.display = "block";
+        }
+    </script>
+}
+
+<style type="text/css">
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.25);
+    }
+
+    .modal_content {
+        background-color: white;
+        position: absolute;
+        top: 20%;
+        left: 30%;
+        width: 40%;
+        padding: 20px;
+        border-radius: 5px;
+        border: 2px solid black;
+    }
+</style>
+
+
+
