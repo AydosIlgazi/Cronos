@@ -11,20 +11,22 @@ namespace Cronos.Application.Features.Announcement
     {
         public class UpdateAnnouncementCommand : IRequest<bool>
         {
-            public UpdateAnnouncementCommand(AnnouncementEntity obj)
+            public UpdateAnnouncementCommand(UpdateAnnouncementDto obj)
             {
                 this.Obj = obj;
             }
 
-            public AnnouncementEntity Obj { get; private set; }
+            public UpdateAnnouncementDto Obj { get; private set; }
         }
 
         public class UpdateAnnouncementHandler : IRequestHandler<UpdateAnnouncementCommand, bool>
         {
             private readonly ApplicationContext _context;
+            private readonly IMapper _mapper;
             public UpdateAnnouncementHandler(ApplicationContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
             public async Task<bool> Handle(UpdateAnnouncementCommand request, CancellationToken cancellationToken)
@@ -36,7 +38,7 @@ namespace Cronos.Application.Features.Announcement
                     return false; 
                 }
                 int oldOrder = announcement.Order;
-                announcement = request.Obj;
+                announcement = _mapper.Map(request.Obj,announcement);
                 if (announcement.Order > oldOrder) 
                 {
                     isNewOrderSmaller = false;
@@ -73,8 +75,12 @@ namespace Cronos.Application.Features.Announcement
                 // order mantığı sonu
 
                 _context.Announcements.Update(announcement);
-                await _context.SaveChangesAsync(cancellationToken);
+                var result =await _context.SaveChangesAsync(cancellationToken);
 
+                if(result == 0)
+                {
+                    return false;
+                }
                 return true;
             }
         }
@@ -105,6 +111,27 @@ namespace Cronos.Application.Features.Announcement
                 {
                     return false;
                 }
+                // Order mantığı
+                // silinen duyurunun orderi en sondaki orderi alır. silinen duyurunun sonrasında bulunan orderlar 1 azalır.
+                // 28.09.2022 Murat Çalışkan
+                if(announcement.IsDeleted == false)
+                {
+                    List<AnnouncementEntity> entities = await _context.Announcements.DisplayedEntitiesCms().AsNoTracking().ToListAsync();
+                    var lastItem = entities.LastOrDefault();
+                    int oldOrder = announcement.Order;
+                    announcement.Order = lastItem.Order;
+                    foreach (var item in entities)
+                    {
+                        if (item.Order > oldOrder)
+                        {
+                            item.Order--;
+                            _context.Announcements.Update(item);
+                        }
+                    }
+
+                }
+                // Order mantığı sonu
+
                 announcement.IsDeleted = !announcement.IsDeleted;
                 announcement.ModifiedDate = DateTime.Now;
                 _context.Announcements.Update(announcement);

@@ -27,7 +27,7 @@ namespace Cronos.Web.Controllers
         public async Task<IActionResult> Index()
         {
             AnnouncementViewModel viewModel = new();
-            viewModel = await _mediator.Send(new GetAnnouncementAdminQuery());
+            viewModel = await _mediator.Send(new GetAnnouncementCmsQuery());
             return View(viewModel);
         }
 
@@ -74,13 +74,13 @@ namespace Cronos.Web.Controllers
         [Route("cms/announcement/updateannouncement")]
         public async Task<IActionResult> UpdateAnnouncement(int id)
         {
-            AnnouncementEntity entity = await _mediator.Send(new GetAnnouncementByIdQuery(id));
+            UpdateAnnouncementDto entity = await _mediator.Send(new GetAnnouncementByIdQuery(id));
             return View(entity);
         }
 
         [HttpPost]
         [Route("cms/announcement/updateannouncement")]
-        public async Task<IActionResult> UpdateAnnouncement([FromForm] AnnouncementEntity obj)
+        public async Task<IActionResult> UpdateAnnouncement([FromForm] UpdateAnnouncementDto obj)
         {
             AnnouncementValidator validationRules = new AnnouncementValidator();
             ValidationResult validationResult = validationRules.Validate(obj);
@@ -105,7 +105,7 @@ namespace Cronos.Web.Controllers
             bool result =await _mediator.Send(new DeleteAnnouncementCommand(id));
             if(result == true)
             {
-                TempData["success"] = "Announcement deleted succesfully.";
+                TempData["success"] = "Announcement updated succesfully.";
             }
             else
             {

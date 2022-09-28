@@ -72,7 +72,7 @@ namespace Cronos.Application.Features.Announcement
 
         //duyurunun idsine göre getirilmesi amacıyla eklenmiştir.
         //23.09.2022 Murat Çalışkan
-        public class GetAnnouncementByIdQuery: IRequest<AnnouncementEntity>
+        public class GetAnnouncementByIdQuery: IRequest<UpdateAnnouncementDto>
         {
             public GetAnnouncementByIdQuery(int id)
             {
@@ -82,31 +82,35 @@ namespace Cronos.Application.Features.Announcement
             public int Id { get; private set; }
         }
 
-        public class GetAnnouncementByIdHandler : IRequestHandler<GetAnnouncementByIdQuery, AnnouncementEntity>
+        public class GetAnnouncementByIdHandler : IRequestHandler<GetAnnouncementByIdQuery, UpdateAnnouncementDto>
         {
             private readonly ApplicationContext _context;
+            private readonly IMapper _mapper;
 
-            public GetAnnouncementByIdHandler(ApplicationContext context)
+            public GetAnnouncementByIdHandler(ApplicationContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper=mapper;
             }
 
-            public async Task<AnnouncementEntity> Handle(GetAnnouncementByIdQuery request, CancellationToken cancellationToken)
+            public async Task<UpdateAnnouncementDto> Handle(GetAnnouncementByIdQuery request, CancellationToken cancellationToken)
             {
                 var announcement = await _context.Announcements.AsNoTracking().FirstOrDefaultAsync(c => c.Id == request.Id);
                 if (announcement == null)
                 {
                     return null;
                 }
-                return announcement;
+                var announcementDto = _mapper.Map(announcement, new UpdateAnnouncementDto());
+                
+                return announcementDto;
             }
         }
 
         // cms ekranında tüm duyuruların listelenmesi amacıyla eklenmiştir.
         // 26.09.2022
-        public class GetAnnouncementAdminQuery : IRequest<AnnouncementViewModel> { }
+        public class GetAnnouncementCmsQuery : IRequest<AnnouncementViewModel> { }
 
-        public class GetAnnouncementAdminHandler : IRequestHandler<GetAnnouncementAdminQuery, AnnouncementViewModel>
+        public class GetAnnouncementAdminHandler : IRequestHandler<GetAnnouncementCmsQuery, AnnouncementViewModel>
         {
             private readonly ApplicationContext _context;
             private readonly IMapper _mapper;
@@ -116,7 +120,7 @@ namespace Cronos.Application.Features.Announcement
                 _mapper = mapper;
             }
 
-            public async Task<AnnouncementViewModel> Handle(GetAnnouncementAdminQuery request, CancellationToken cancellationToken)
+            public async Task<AnnouncementViewModel> Handle(GetAnnouncementCmsQuery request, CancellationToken cancellationToken)
             {
                 var announcements = await _context.Announcements.DisplayedEntitiesCms().ToListAsync(cancellationToken);
 

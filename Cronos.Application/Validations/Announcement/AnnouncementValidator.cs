@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cronos.Application.Validations.Announcement
 {
-    public class AnnouncementValidator : AbstractValidator<AnnouncementEntity>
+    public class AnnouncementValidator : AbstractValidator<UpdateAnnouncementDto>
     {
         public AnnouncementValidator()
         {
@@ -15,7 +15,7 @@ namespace Cronos.Application.Validations.Announcement
             RuleFor(x => x.ShortDescription).NotNull();
             RuleFor(x => x.Description).NotNull();
             RuleFor(x => x.RedirectUrl).NotNull();
-            RuleFor(x => x.ShortDescription).Length(0, 200).WithMessage("Short description must between 0-200 char.");
+            RuleFor(x => x.ShortDescription).Length(0, 255).WithMessage("Short description must between 0-255 char.");
             RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("End date can not be earlier than start date");
             RuleFor(x => x.StartDate).LessThan(x => x.EndDate).WithMessage("End date can not be earlier than start date");
             RuleFor(x => x.Order).NotNull();
@@ -46,7 +46,7 @@ namespace Cronos.Application.Validations.Announcement
             RuleFor(x => x.RedirectUrl).NotNull();
             RuleFor(x => x.StartDate).NotNull();
             RuleFor(x => x.EndDate).NotNull();
-            RuleFor(x => x.ShortDescription).Length(0, 200).WithMessage("Short description must between 0-200 char.");
+            RuleFor(x => x.ShortDescription).Length(0, 255).WithMessage("Short description must between 0-255 char.");
             RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("End date can not be earlier than start date");
             RuleFor(x => x.StartDate).LessThan(x => x.EndDate).WithMessage("End date can not be earlier than start date");
             RuleFor(x => x.StartDate).GreaterThanOrEqualTo(DateTime.Now).WithMessage("Start date must be later than now");

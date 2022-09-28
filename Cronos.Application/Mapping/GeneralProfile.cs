@@ -10,6 +10,8 @@ namespace Cronos.Application.Mapping
             CreateMap<AnnouncementEntity, AnnouncementCardDto>();
             CreateMap<AnnouncementEntity, CreateAnnouncementDto>();
             CreateMap<CreateAnnouncementDto, AnnouncementEntity>();
+            CreateMap<UpdateAnnouncementDto, AnnouncementEntity>();
+            CreateMap<AnnouncementEntity, UpdateAnnouncementDto> ();
         }
     }
 }
