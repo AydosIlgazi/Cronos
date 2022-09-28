@@ -1,0 +1,58 @@
+﻿@using Cronos.Application.ViewModels
+@model BannerViewModel
+@{
+
+    //Layout = null;
+}
+
+<h2>Banner Listesi</h2>
+<br />
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Görüntü Url</th>
+        <th>Oluşturulma Tarihi</th>
+        <th>Başlangıç Tarihi</th>
+        <th>Bitiş Tarihi</th>
+        <th>Redirect Url</th>
+        <th>Sıra</th>
+        <th>Alt Metin</th>
+        <th>Aktif Mi?</th>
+        <th>Silindi Mi?</th>
+        <th>Seçenekler</th>
+    </tr>
+
+    </thead>
+    <tbody>
+
+    @foreach (var item in Model.Banners)
+    {
+        <tr>
+            
+            <td>@item.ImageUrl</td>
+            <td>@item.CreatedDate</td>
+            <td>@item.StartDate</td>
+            <td>@item.EndDate</td>
+            <td>@item.RedirectUrl</td>
+            <td>@item.Order</td>
+            <td>@item.AltText</td>
+            <td>@item.IsActive</td>
+            <td>@item.IsDeleted</td>
+               
+                    <td>
+                        <a asp-controller="Banner" asp-action="Update" asp-route-id="@item.Id" class="btn btn-danger">Güncelle</a>
+                @if(!item.IsDeleted){
+                    <td> <a asp-controller="Banner" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Sil</a></td>
+                }else {
+                    <td> <a asp-controller="Banner" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Geri Ekle</a></td>
+                }
+                </td>
+                
+        </tr>
+    }
+    </tbody>
+
+</table>
+
+
+

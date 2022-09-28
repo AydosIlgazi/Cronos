@@ -1,0 +1,173 @@
+﻿@using Cronos.Application.ViewModels
+@model BannerUpdateViewModel
+
+
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <link rel="stylesheet" href="~/css/site.css   />
+    <script defer src="~/js/site.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</head>
+<body>
+    <form method="post" asp-action="update" id="form2">
+        <div class="form-group">
+            <label asp-for="ImageUrl">Görüntü Url</label>
+            <input asp-for="ImageUrl" class="form-control" id="ImageUrl">
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
+
+             
+            </div>
+            @Html.ValidationMessageFor(m=>m.ImageUrl,"", new { @class="text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label asp-for="AltText">Alt Metin</label>
+            <input asp-for="AltText" class="form-control" id="AltText">
+            @Html.ValidationMessageFor(m=>m.AltText,"", new { @class="text-danger" })
+
+        </div>
+        <div class="form-group">
+            <label asp-for="RedirectUrl">Redirect Url</label>
+            <input asp-for="RedirectUrl" class="form-control" id="RedirectUrl">
+            @Html.ValidationMessageFor(m=>m.RedirectUrl,"", new { @class="text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StartDate">Başlangıç Tarihi</label>
+            <input asp-for="StartDate" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" id="StartDate">
+
+
+            @Html.ValidationMessageFor(m=>m.StartDate,"", new { @class="text-danger" })
+
+
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate">Bitiş Tarihi</label>
+            <input asp-for="EndDate" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" id="EndDate">
+            @Html.ValidationMessageFor(m=>m.EndDate,"", new { @class="text-danger" })
+
+        </div>
+        <br />
+        <div class="form-group">
+            <label asp-for="IsActive">Aktif Mi?</label>
+            @*<input data-val="true"
+                   data-val-required="The isActive field is required."
+                   id="IsActive"
+                   name="IsActive"
+                   type="checkbox"
+                   value="true" />*@
+            @Html.CheckBoxFor(m => m.IsActive)
+        </div>
+        <div class="form-group" id="IsDeleted">
+            <label asp-for="IsActive">Silindi Mi?</label>
+
+            @Html.CheckBoxFor(m => m.IsDeleted)
+            <span asp-validation-for="IsDeleted" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+
+            <label asp-for="Order">Sıra</label>
+            <input asp-for="Order" class="form-control" id="Order">
+
+            <span asp-validation-for="@Model.Order" class="text-danger"></span>
+        </div>
+
+
+        </br>
+
+        <button class="btn btn-primary" type="submit" style="visibility:visible">Güncelle</button>
+        <a asp-controller="Banner" asp-action="index" class="btn btn-danger">İptal Et</a>
+
+
+
+    </form>
+
+    <style type="text/css">
+        .modal2 {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.25);
+        }
+
+        .modal_content {
+            background-color: white;
+            position: absolute;
+            top: 20%;
+            left: 30%;
+            width: 40%;
+            padding: 20px;
+            border-radius: 5px;
+            border: 2px solid black;
+        }
+    </style>
+
+    @if (TempData["success"] != null)
+    {
+        <div class="modal" id="modal2">
+            <div class="modal_content">
+                <p>@TempData["success"]</p>
+                <a asp-controller="Banner" id="js-btn" asp-action="Index" class="btn btn-primary">Tamam</a>
+            </div>
+        </div>
+
+    }
+
+    @* <script type="text/javascript">
+    const the_button = document.querySelector(".js-btn")
+    const modal = document.querySelector(".modal")
+    const closeBtn = document.querySelector(".close")
+
+    document.addEventListener("DOMContentLoaded", () => {
+    the_button.addEventListener("click", handleClick)
+    })
+
+    function handleClick(event) {
+    modal.style.display = "block";
+    closeBtn.addEventListener("click", () => {
+    modal.style.display = "none"
+    })
+    }
+
+    $("#RedirectUrl").mask("https://*{1,50}");
+
+    </script>*@
+
+    @if (TempData["success"] != null)
+    {
+
+        <script type="text/javascript">
+
+            const modal = document.getElementById("modal2")
+            $(window).on('load', function () {
+
+                modal.style.display = "block";
+
+            });
+
+        </script>
+    }
+
+</body>
+</html>

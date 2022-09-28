@@ -18,7 +18,9 @@ namespace Cronos.Controllers
             _mediator = mediator;
         }
 
+        [Route("cms/home/index")]
         public async Task<IActionResult> Index()
+        
         {
             HomeViewModel viewModel = new HomeViewModel();
             viewModel.BannerViewModel = await _mediator.Send(new GetBannersQuery());

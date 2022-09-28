@@ -7,6 +7,8 @@ namespace Cronos.Application.Mapping
         {
             CreateMap<BannerEntity, BannerDto>();
 
+            //28.09.2022 Irem Kesemen
+            CreateMap<BannerEntity, BannerUpdateViewModel>().ReverseMap();
         }
     }
 }

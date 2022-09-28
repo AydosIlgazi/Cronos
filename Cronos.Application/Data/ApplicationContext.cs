@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Reflection;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -19,17 +21,43 @@ namespace Cronos.Application.Data
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+        //23.09.2022 Irem Kesemen
+        public async Task<int> SaveChanges()
+        {
+            return await base.SaveChangesAsync();
+        }
     }
 
     public static class ApplicationContextExtensions
     {
         public static IQueryable<T> DisplayedEntities<T>(this DbSet<T> dbSet) where T : BaseEntity
         {
-            return dbSet.Where(
-                    b => b.IsActive == true && b.StartDate <= DateTime.Now
-                    && b.EndDate >= DateTime.Now).OrderBy(b => b.Order)
+            return dbSet
+                .Where(
+                   b => b.IsActive == true 
+                    && b.StartDate >= DateTime.Now
+                    && b.EndDate >= DateTime.Now)
+                .OrderBy(b => b.Order)
                     .AsQueryable();
         }
 
+        public static IQueryable<T> CmsDisplay<T>(this DbSet<T> dbSet) where T : BaseEntity
+        {
+            return dbSet
+                //.Where(
+                //    b => b.IsActive == true 
+                //    && b.StartDate <= DateTime.Now
+                //    && b.EndDate >= DateTime.Now)
+                .OrderBy(b => b.Order)
+                    .AsQueryable();
+        }
+
+
+
+
+
     }
+ 
 }
+
