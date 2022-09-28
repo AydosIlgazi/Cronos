@@ -1,0 +1,124 @@
+﻿@model Cronos.Application.Dtos.MenusDto
+
+<html>
+<head>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+
+    @using (Html.BeginForm(FormMethod.Post, new { role = "form", id = "editForm" }))
+    {
+        //input Id should be hidden
+        <input hidden value="@Model.Id" name="Id" />
+
+        <input hidden value="@TempData["result"]" id="result" />
+
+        <div class="form-group row">
+            <label for="MenuAdi" class="col-sm-2 col-form-label">Menu Adı:</label>
+            <div class="col-sm-7">
+                <input disabled type="text" required name="MenuName" class="form-control" value="@Model.MenuName">
+            </div>
+        </div>
+
+
+        <br />
+
+
+        <div class="form-group row">
+            <label for="Icerik" class="col-sm-2 col-form-label">İçerik:</label>
+            <div class="col-sm-7">
+                <input disabled type="text" required name="Content" class="form-control" value="@Model.Content">
+            </div>
+        </div>
+
+        <br />
+        <input hidden disabled name="ModifiedDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" />
+
+        <br />
+        <div class="form-group row">
+            <label for="BaslangicZamani" class="col-sm-2 col-form-label">Başlangıç Zamanı:</label>
+            <div class="col-sm-7">
+
+                @Html.TextBoxFor(x => Model.StartDate, "{0:yyyy-MM-ddTHH:mm:ss}", new
+            {
+            @class = "form-control",
+            required = "required",
+            @type = "datetime-local",
+            @name="StartDate",
+            @disabled="true"
+            })
+
+            </div>
+        </div>
+
+        <br />
+
+
+        <div class="form-group row">
+            <label for="BitisZamani" class="col-sm-2 col-form-label">Bitiş Zamanı:</label>
+            <div class="col-sm-7">
+
+                @Html.TextBoxFor(x => Model.EndDate, "{0:yyyy-MM-ddTHH:mm:ss}", new
+            {
+            @class = "form-control",
+            required = "required",
+            @type = "datetime-local",
+            @name="EndDate",
+            @disabled="true"
+            
+            })
+
+
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            <label for="Icerik" class="col-sm-2 col-form-label">Sırası:</label>
+            <div class="col-sm-7">
+                <input disabled type="text" required name="Order" class="form-control" value="@Model.Order">
+            </div>
+        </div>
+
+        <br />
+        <div class="form-group row">
+            <label for="IsActive" class="col-sm-2 col-form-label">Aktif mi?:</label>
+            <div class="col-sm-7">
+                @Html.EditorFor(menu => menu.IsActive,new { htmlAttributes = new { @disabled="true" } })
+            </div>
+
+        </div>
+        <br />
+
+        <div class="form-group row">
+            <label for="IsDeleted" class="col-sm-2 col-form-label">Silinmiş mi?:</label>
+            <div class="col-sm-7">
+                @Html.EditorFor(menu => menu.IsDeleted,new { htmlAttributes = new { @disabled="true" }})
+            </div>
+        </div>
+
+
+
+
+        <span>  <input type="submit" class="btn btn-danger" value="Sil" /></span>
+    }
+
+
+    @* Dont forget to add Modified Date time.now() Ş.geyik | 26.09.22*@
+
+
+
+
+    @section Scripts {
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="~/js/editmenu.js"></script>
+    }
+
+
+    </body>
+
+    </html>

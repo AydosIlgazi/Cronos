@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using static Cronos.Application.Features.Banner.GetBanners;
+using static Cronos.Application.Features.Menu.GetAllMenus;
 
 namespace Cronos.Controllers
 {
@@ -22,6 +23,7 @@ namespace Cronos.Controllers
         {
             HomeViewModel viewModel = new HomeViewModel();
             viewModel.BannerViewModel = await _mediator.Send(new GetBannersQuery());
+            viewModel.MenuViewModel = await _mediator.Send(new GetAllMenusQuery());
             return View(viewModel);
         }
 

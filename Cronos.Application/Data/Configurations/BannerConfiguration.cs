@@ -6,6 +6,7 @@ namespace Cronos.Application.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<BannerEntity> builder)
         {
+         
             //builder.Property(b => b.ImageUrl).IsRequired(false);
             //builder.Property(b => b.AltText).HasMaxLength(200);
 
