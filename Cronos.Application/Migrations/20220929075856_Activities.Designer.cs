@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cronos.Application.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220927190219_kocationUrlAdde")]
-    partial class kocationUrlAdde
+    [Migration("20220929075856_Activities")]
+    partial class Activities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,6 +62,7 @@ namespace Cronos.Application.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("locationUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

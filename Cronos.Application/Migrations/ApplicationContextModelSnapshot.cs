@@ -60,6 +60,7 @@ namespace Cronos.Application.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("locationUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
