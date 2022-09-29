@@ -31,11 +31,10 @@ namespace Cronos.Application.Data
                     .OrderBy(b => b.Order)
                     .AsQueryable();
         }
-        //Adminin etkinliklerin tüm propertylerini görmesi için.  Gülderen Sungur 29.09.2022
+        //Adminin, etkinliklerin tüm propertylerini görmesi için.  Gülderen Sungur 29.09.2022
         public static IQueryable<T> ShowAllEntity<T>(this DbSet<T> dbSet) where T : BaseEntity
         {
             return dbSet
-                   
                     .OrderBy(b => b.Order)
                     .AsQueryable();
         }

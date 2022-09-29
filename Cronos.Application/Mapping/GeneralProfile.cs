@@ -9,6 +9,7 @@ namespace Cronos.Application.Mapping
         {
             CreateMap<BannerEntity, BannerDto>();
             CreateMap<ActivityEntity, ActivityDto>();
+            CreateMap<ActivityEntity, UpdateActivityViewModel>().ReverseMap();
 
         }
     }

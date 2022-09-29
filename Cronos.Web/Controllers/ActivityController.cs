@@ -85,7 +85,6 @@ namespace Cronos.Web.Controllers
             {
             var activity = await _mediator.Send(command);
             TempData["success"] = "İşlem başarılı";
-         
 
             }
             else
