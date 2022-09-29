@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Cronos.Application.Data.Configurations;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
@@ -19,14 +21,14 @@ namespace Cronos.Application
 
 
             ////25.09.2022 Irem Kesemen
-            //services.AddControllers().AddFluentValidation(
+            services.AddControllers().AddFluentValidation(
 
-            //    fv => fv.RegisterValidatorsFromAssemblyContaining<BannerValidator>());
-            //services.AddControllersWithViews();
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-            //services.AddValidatorsFromAssembly(typeof(ServiceRegistration).Assembly);
+                fv => fv.RegisterValidatorsFromAssemblyContaining<BannerValidator>());
+            services.AddControllersWithViews();
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddValidatorsFromAssembly(typeof(ServiceRegistration).Assembly);
 
-            
+
         }
 
     }
