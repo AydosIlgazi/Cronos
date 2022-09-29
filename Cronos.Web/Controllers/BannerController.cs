@@ -51,7 +51,9 @@ namespace Cronos.Web.Controllers
         [Route("cms/banner/create")]
         public async Task<IActionResult> Create(SaveBannersCommand command, BannerEntity entity,int id)
         {
-          
+            BannerValidator validations = new BannerValidator();
+            ValidationResult results = validations.Validate(entity);
+
             ModelState.Clear();
             return View();
         }
@@ -75,13 +77,17 @@ namespace Cronos.Web.Controllers
             {
                 foreach (ValidationFailure item in result.Errors)
                 {
-                   //00elState.Clear();
+                    ModelState.Clear();
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                    //return RedirectToAction("Create", "Banner");
-
-                    //Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    //return Json("Not valid model");
+                    
                 }
+
+                //foreach (var state in ModelState.Values)
+                //{
+                //    if (state.Errors.Count > 0)
+                //        state.Errors.Clear();
+                //}
+
             }
             return View() ;
            

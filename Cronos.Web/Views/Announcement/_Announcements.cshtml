@@ -1,0 +1,30 @@
+﻿@using Cronos.Application.ViewModels
+@model AnnouncementCardViewModel
+
+
+<div class="custom-news-slider-holder custom-base-slider-holder">
+    <div class="custom-news-slider swiper">
+        <div class="swiper-wrapper">
+            @foreach (var item in Model.AnnouncementCards)
+            {
+                <div class="swiper-slide">
+                    <div class="custom-base-item">
+                        <div class="custom-head">
+                            <span>@item.Header</span>
+                        </div>
+                        <div class="custom-body">
+                            <div class="custom-text">
+                                <span>@item.ShortDescription</span>
+                            </div>
+                            <div class="custom-read-more">
+                                <a href="@item.RedirectUrl" target="_blank">Devamı</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+        </div>
+    </div>
+</div>
+

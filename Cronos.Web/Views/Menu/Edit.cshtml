@@ -1,0 +1,87 @@
+﻿@model Cronos.Application.ViewModels.MenusViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+  
+
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/menuEditTable.css" rel="stylesheet" />
+    <title>Edit Menus</title>
+</head>
+<body>
+
+    <partial name="~/Views/Menu/_Menu.cshtml" for="@Model">
+
+
+<h4>Menus Edit Page</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+                @using (Html.BeginForm("Edit", "Menu", FormMethod.Post) ){
+      
+            <div class="form-group">
+
+             
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Menu Name</th>
+                                    <th>Content</th>
+                                    <th>Menu Order</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Is Active</th>
+                                    <th>Is Deleted</th>
+                                    <th>Edit Item</th>
+                                    <th>Delete Item</th>
+                            </thead>
+                            <tbody>
+                                @foreach(var menu in Model.Menus){
+
+                                   
+                                    
+                                        <tr>
+
+                                            <td>@menu.Id</td>
+                                            <td><input disabled  type="text" name="MenuName" value="@menu.MenuName" /></td>
+                                            <td><input disabled type="text" name="Content" value="@menu.Content" /></td>
+                                            <td>
+                                                <input disabled type="text" name="MenuOrder" value="@menu.Order" />
+                                            </td>
+                                            <td><input disabled name="StartDate" type="datetime-local" value="@menu.StartDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
+                                            <td><input disabled name="EndDate" type="datetime-local" value="@menu.EndDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
+                                            <td><input disabled name="IsActive" value="@menu.IsActive" type="checkbox" @(menu.IsActive? "checked" : "") /></td>
+                                            <td><input disabled name="IsDeleted" value="@menu.IsDeleted" type="checkbox" @(menu.IsDeleted? "checked" : "") /></td>
+                                            <td><a asp-action="editMenu" asp-route-id="@menu.Id" asp class="btn btn-warning">Edit</a></td>
+                                            <td><a asp-action="deleteMenu" asp-route-id="@menu.Id" asp class="btn btn-danger">Delete</a></td>
+                                        </tr>
+                                    
+                                }
+                               
+                                 
+                          
+                                    
+                            </tbody>
+                        </table>
+            
+
+
+         
+            </div>
+       }
+    </div>
+</div>
+        <a asp-action="addMenu"  class="btn btn-info">Yeni Menü Ekle</a>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+      
+</body>
+</html>

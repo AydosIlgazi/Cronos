@@ -1,0 +1,189 @@
+﻿@model Cronos.Application.ViewModels.MenusViewModel
+@using Cronos.Application.Dtos
+
+
+@*Kullanışlı methodlar ve Değişkenler .--Ş.GEYİK--22.09.22*@
+@{
+
+    //bool hasSubMenuChild(int parentId){
+    //    if (Model.SubMenus.Count(submenu => submenu.ParentId == id) == 0)
+    //    {
+    //        return false;
+    //    }
+
+    //    return true;
+    //}
+
+    IOrderedEnumerable<SubMenusDto> getSubMenusById(int id)
+    {
+        return Model.SubMenus.FindAll(submenu => submenu.ParentId == id).OrderBy(submenu => submenu.Order);
+    }
+    IOrderedEnumerable<SubMenus2Dto> getSubMenus2ById(int id)
+    {
+        return Model.SubMenus2.FindAll(submenu => submenu.ParentId == id).OrderBy(submenu => submenu.Order);
+    }
+
+   
+    bool hasSubMenu2(int id)
+    {
+
+        //eğer gelen menünün submenüsü yoksa false döndür varsa true döndür
+        if (Model.SubMenus2.Count(submenu => submenu.ParentId == id) == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    bool hasChild(int id)
+    {
+
+        //eğer gelen menünün submenüsü yoksa false döndür varsa true döndür
+        if (Model.SubMenus.Count(submenu => submenu.ParentId == id) == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+    var menusOrdered = Model.Menus.OrderBy(menu => menu.Order);
+
+
+
+}
+
+@*----- Kullanışlı methodlar ve Değişkenler END .--Ş.GEYİK--22.09.22 -------*@
+
+
+<html>
+
+    <head>
+    <link href="~/css/menus.css" rel="stylesheet" />
+    </head>
+
+    <body>
+
+
+<header class="header" id="header">
+    <section class="wrapper container">
+
+
+
+    
+
+
+        <div class="burger" id="burger">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+        </div>
+        <span class="overlay"></span>
+        <nav class="navbar" id="navbar">
+            <ul class="menu" id="menu">
+
+           
+             
+                   
+
+                @foreach(var menu in menusOrdered)
+                {
+
+                       if(menu.IsActive==true && menu.IsDeleted==false){
+
+                       
+                      
+                        if(!hasChild(menu.Id)){
+                             <li class="menu-item"><a href="@menu.Content" class="menu-link">@menu.MenuName</a></li>
+                        }
+
+                        else{
+                            <li class="menu-item menu-dropdown">
+                                <span class="menu-link" data-toggle="submenu">@menu.MenuName<i class="bx bx-chevron-down"></i></span>
+                                <ul class="submenu">
+                                   
+                                    @*Menünün submenülerini getir*@
+
+                                    @{
+                                        var submenus = getSubMenusById(menu.Id);
+
+                                    }
+                                  
+                                    @foreach(var submenu in submenus){
+                                            if (submenu.IsActive == true && submenu.IsDeleted == false)
+                                            {
+
+                                                //submenününde childi varsa iki kırılımlı için | Ş.geyik |23.09.22
+
+                                                if (hasSubMenu2(submenu.Id))
+                                                {
+                                                    <li class="menu-item menu-dropdown">
+                                                        <span class="menu-link" data-toggle="submenu">@submenu.SubMenuName<i class="bx bx-chevron-down"></i></span>
+
+
+                                                        @{
+                                                            var secondDegreesSubMenu = getSubMenus2ById(submenu.Id);
+                                                        }
+
+                                                        <div class="secondDegreeSubMenuContainer submenu">
+                                                            @foreach (var subMenu2 in secondDegreesSubMenu)
+                                                            {
+                                                                if (subMenu2.IsActive == true && subMenu2.IsDeleted == false)
+                                                                {
+
+                                                                    <ul>
+
+                                                                        <li class="menu-item"><a href="@subMenu2.Content" class="submenu-link">@subMenu2.SubMenuName</a></li>
+
+
+                                                                    </ul>
+
+
+                                                                }
+                                                            }
+                                                        </div>
+
+
+
+                                                    </li>
+                                                }
+
+                                                //submenünün childi yoksa tek kırılım ise -- |Ş.Geyik-22.09
+                                                else
+                                                {
+                                                    <li class="submenu-item"><a href="@submenu.Content" class="submenu-link">@submenu.SubMenuName</a></li>
+                                                }
+
+                                            } 
+                                        }
+
+                                       
+                                  
+                                   
+                                </ul>
+                                </li>
+                          
+                        }
+
+                
+    }
+                }
+                    
+                   
+
+       
+            </ul>
+        </nav>
+    </section>
+</header>
+
+
+
+    <script src="~/js/menus.js"></script>
+</body>
+</html>

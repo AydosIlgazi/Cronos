@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cronos.Application.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220922104758_Message")]
+    [Migration("20220921120449_Message")]
     partial class Message
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

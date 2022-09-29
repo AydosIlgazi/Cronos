@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 //using static Cronos.Application.Features.Banner.UpdateBanners;
 namespace Cronos.Application.Data.Configurations
 {
-    //29.09.2022 İrem Kesemen
-    public class UpdateBannerValidator : AbstractValidator<BannerUpdateViewModel>
+    //24.09.2022 İrem Kesemen
+    public class BannerValidator : AbstractValidator<BannerEntity>
     {
-        public UpdateBannerValidator()
+        public BannerValidator()
         {
             RuleFor(x => x.ImageUrl).NotEmpty().WithMessage("Boş bırakılamaz!");
 
-            RuleFor(b => b.StartDate).GreaterThan(DateTime.Today).WithMessage("Başlama tarihi kayıt tarihinden önce olamaz!").NotEmpty().WithMessage("Boş bırakılamaz!");
+            RuleFor(b => b.StartDate).NotEmpty().WithMessage("Boş bırakılamaz!");
 
 
-            RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("Update Bitiş tarihi başlangıç tarihinden önce olamaz!").NotEmpty().WithMessage("Boş bırakılamaz!");
+            RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("Bitiş tarihi başlangıç tarihinden önce olamaz!").NotEmpty().WithMessage("Boş bırakılamaz!");
 
 
             RuleFor(x => x.AltText).NotEmpty().WithMessage("Boş bırakılamaz!");
@@ -26,13 +26,13 @@ namespace Cronos.Application.Data.Configurations
             RuleFor(x => x.IsActive).NotNull().WithMessage("Boş bırakılamaz!");
 
             RuleFor(x => x.Order)
-
+                
                 .GreaterThanOrEqualTo(1)
                 .WithMessage("Numaralandırma 1'den başlamalıdır.")
                 .NotEmpty().WithMessage("Boş bırakılamaz!");
 
 
-
+           
             RuleFor(x => x.RedirectUrl).Must(LinkMustBeAUri).WithMessage("Lütfen geçerli bir link girin!").NotEmpty().WithMessage("Boş bırakılamaz!");
 
         }

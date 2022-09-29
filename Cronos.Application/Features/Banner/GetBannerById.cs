@@ -28,7 +28,7 @@ namespace Cronos.Application.Features.Banner
             }
             public async Task<BannerUpdateViewModel> Handle(GetBannerById query, CancellationToken cancellationToken)
             {
-                var banner = _context.Banners.Where(a => a.Id == query.Id).FirstOrDefault();
+                var banner = _context.Banners.Where(a => a.Id == query.Id).AsNoTracking().FirstOrDefault();
               
                 if (banner == null) return null;
 

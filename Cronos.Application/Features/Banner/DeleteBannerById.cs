@@ -35,24 +35,24 @@ namespace Cronos.Application.Features.Banner
                 if (product == null) return false;
                 
                 if (product.IsDeleted == false) { 
-                List<BannerEntity> entities = await _context.Banners.CmsDisplay().AsNoTracking().ToListAsync();
+                List<BannerEntity> entities = await _context.Banners.DisplayedEntitiesCms().ToListAsync();
                 var order = entities.LastOrDefault();
                     int oldorder = product.Order;
 
                 product.Order = order.Order;
                 foreach (var item in entities)
                 {
-                    if (item.Order > oldorder)
+                    if (item.Order > oldorder && item != product)
                     {
                         item.Order--;
-                        _context.Banners.Update(item);
+                       //_context.Banners.Update(item);
                     }
                 }
             }
                 product.IsDeleted = !product.IsDeleted;
             //kendisinden öncekileri bir azaltmalı
             product.ModifiedDate = DateTime.Now;
-                _context.Banners.Update(product);
+               // _context.Banners.Update(product);
                 var result = await _context.SaveChanges();
                 if (result == 0)
                 {

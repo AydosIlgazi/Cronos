@@ -2,14 +2,21 @@
     ViewData["Title"] = "Home Page";
 }
 @using Cronos.Application.ViewModels
+
 @model HomeViewModel
 
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
 
+
+
+
+
+
+
+
+<partial name="~/Views/Menu/_Menu.cshtml" for="@Model.MenuViewModel">
 
 
 @Html.Partial("~/Views/Banner/_Banners.cshtml", Model.BannerViewModel)
+@Html.Partial("~/Views/Announcement/_Announcements.cshtml", Model.AnnouncementCardViewModel)
+@Html.Partial("~/Views/Activity/_Activity.cshtml", Model.ActivityViewModel)

@@ -60,7 +60,7 @@ namespace Cronos.Application.Features.Banner
                         {
                             NewOrderSmall = false;
                         }
-                        List<BannerEntity> banners = await _context.Banners.AsNoTracking().ToListAsync();
+                        List<BannerEntity> banners = await _context.Banners.ToListAsync();
                         foreach(var item in banners)
                         {
                             if(item.Order==command.Order && item.Id != command.Id)
@@ -75,12 +75,12 @@ namespace Cronos.Application.Features.Banner
                                 if(item.Order >= command.Order && item.Order<OrderBefore && NewOrderSmall==true && item.Id != command.Id)
                                 {
                                     item.Order++;
-                                    _context.Banners.Update(item);
+                                    //_context.Banners.Update(item);
                                 }
                                 else if(item.Order <= command.Order && item.Order>OrderBefore && NewOrderSmall==false && item.Id != command.Id)
                                 {
                                     item.Order--;
-                                    _context.Banners.Update(item);
+                                    //_context.Banners.Update(item);
                                 }
                             }
                         }
@@ -95,7 +95,7 @@ namespace Cronos.Application.Features.Banner
                         product.ImageUrl = command.ImageUrl;
                         product.RedirectUrl = command.RedirectUrl;
 
-                        _context.Banners.Update(product);
+                        //_context.Banners.Update(product);
                         var result = await _context.SaveChangesAsync(cancellationToken);
                         if (result == 0)
                         {

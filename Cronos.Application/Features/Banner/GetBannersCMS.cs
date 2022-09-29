@@ -27,7 +27,7 @@ namespace Cronos.Application.Features.Banner
             }
             public async Task<BannerViewModel> Handle(GetBannersCMSQuery request, CancellationToken cancellationToken)
             {
-                var banners = await _context.Banners.CmsDisplay().ToListAsync(cancellationToken);
+                var banners = await _context.Banners.DisplayedEntitiesCms().AsNoTracking().ToListAsync(cancellationToken);
 
                 BannerViewModel bannerViewModel = new BannerViewModel()
                 {

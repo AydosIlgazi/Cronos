@@ -66,10 +66,9 @@ namespace Cronos.Application.Features.Banner
                         {
                             item.Order++;
                             //veriler.Order = item.Order;
-                            await _context.SaveChangesAsync();
                         }
                     }
-                    await _context.SaveChangesAsync();
+                    
                 }
                 else
                 {
@@ -77,11 +76,10 @@ namespace Cronos.Application.Features.Banner
                 }
              
                 veriler.IsDeleted = false;
-                veriler.IsActive = request.IsActive;
+                veriler.IsActive = true;
                 veriler.ImageUrl = request.ImageUrl;
                 veriler.RedirectUrl = request.RedirectUrl;
                 _context.Banners.Add(veriler);
-                await _context.SaveChanges();
                 var result = await _context.SaveChangesAsync(cancellationToken);
                if(result == 0)
                 {
