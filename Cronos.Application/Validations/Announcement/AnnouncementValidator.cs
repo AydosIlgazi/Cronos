@@ -11,14 +11,14 @@ namespace Cronos.Application.Validations.Announcement
     {
         public AnnouncementValidator()
         {
-            RuleFor(x => x.Header).NotNull();
-            RuleFor(x => x.ShortDescription).NotNull();
-            RuleFor(x => x.Description).NotNull();
-            RuleFor(x => x.RedirectUrl).NotNull();
+            RuleFor(x => x.Header).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.ShortDescription).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.Description).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.RedirectUrl).NotNull().WithMessage("This field is required");
             RuleFor(x => x.ShortDescription).Length(0, 255).WithMessage("Short description must between 0-255 char.");
             RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("End date can not be earlier than start date");
             RuleFor(x => x.StartDate).LessThan(x => x.EndDate).WithMessage("End date can not be earlier than start date");
-            RuleFor(x => x.Order).NotNull();
+            RuleFor(x => x.Order).NotNull().WithMessage("This field is required");
             RuleFor(x => x.Order).GreaterThan(0).WithMessage("Order must be greater than 0");
             RuleFor(x => x.RedirectUrl).Must(LinkMustBeAUri).WithMessage("Redirect url must be valid Url");
 
@@ -40,16 +40,16 @@ namespace Cronos.Application.Validations.Announcement
     {
         public AnnouncementCreateValidator()
         {
-            RuleFor(x => x.Header).NotNull();
-            RuleFor(x => x.ShortDescription).NotNull();
-            RuleFor(x => x.Description).NotNull();
-            RuleFor(x => x.RedirectUrl).NotNull();
-            RuleFor(x => x.StartDate).NotNull();
-            RuleFor(x => x.EndDate).NotNull();
+            RuleFor(x => x.Header).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.ShortDescription).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.Description).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.RedirectUrl).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.StartDate).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.EndDate).NotNull().WithMessage("This field is required");
             RuleFor(x => x.ShortDescription).Length(0, 255).WithMessage("Short description must between 0-255 char.");
             RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("End date can not be earlier than start date");
             RuleFor(x => x.StartDate).LessThan(x => x.EndDate).WithMessage("End date can not be earlier than start date");
-            RuleFor(x => x.Order).NotNull();
+            RuleFor(x => x.Order).NotNull().WithMessage("This field is required");
             RuleFor(x => x.Order).GreaterThan(0).WithMessage("Order must be greater than 0");
             RuleFor(x => x.RedirectUrl).Must(LinkMustBeAUri).WithMessage("Redirect url must be valid Url");
 
