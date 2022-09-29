@@ -31,13 +31,15 @@ namespace Cronos.Application.Data
 
 
         public DbSet<SubMenu2> SubMenus2 { get; set; }
-    }
-
         //23.09.2022 Irem Kesemen
+        
         public async Task<int> SaveChanges()
         {
             return await base.SaveChangesAsync();
         }
+    
+
+
     }
     
     public static class ApplicationContextExtensions
