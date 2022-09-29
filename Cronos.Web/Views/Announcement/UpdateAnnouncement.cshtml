@@ -5,6 +5,7 @@
     <form method="post" asp-controller="Announcement" asp-action="UpdateAnnouncement" >
         <input asp-for="@Model.Announcement.Id" hidden />
         <input asp-for="@Model.Announcement.CreatedDate" hidden />
+        <input asp-for="@Model.Announcement.IsDeleted" hidden />
         <div>
             <label class="form-label" asp-for="@Model.Announcement.Header"></label>
             <input class="form-control" asp-for="@Model.Announcement.Header" />

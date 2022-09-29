@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.InMemory.Query.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace Cronos.Application.Features.Announcement
             {
                 bool isSameOrder = false;
                 bool isNewOrderSmaller = true;
-                var announcement = await _context.Announcements.AsNoTracking().FirstOrDefaultAsync(c => c.Id == request.Obj.Id);
+                var announcement = await _context.Announcements.FirstOrDefaultAsync(c => c.Id == request.Obj.Id);
                 if(announcement == null) {
                     return false; 
                 }
@@ -44,7 +45,7 @@ namespace Cronos.Application.Features.Announcement
                     isNewOrderSmaller = false;
                 }
                 announcement.ModifiedDate = DateTime.Now;
-                List<AnnouncementEntity> entities = await _context.Announcements.AsNoTracking().ToListAsync();
+                List<AnnouncementEntity> entities = await _context.Announcements.ToListAsync();
 
                 // Order mantığı
                 // yeni atanan order eskisinden büyük ve aynı order varsa eski orderla yeni order arasında kalan orderlar 1 azalır.
@@ -64,17 +65,14 @@ namespace Cronos.Application.Features.Announcement
                         if (item.Order >= announcement.Order && item.Order<oldOrder && isNewOrderSmaller==true && item.Id != announcement.Id)
                         {
                             item.Order++;
-                            _context.Announcements.Update(item);
                         }else if(item.Order <= announcement.Order && item.Order > oldOrder && isNewOrderSmaller == false && item.Id != announcement.Id)
                         {
                             item.Order--;
-                            _context.Announcements.Update(item);
                         }
                     }
                 }
                 // order mantığı sonu
 
-                _context.Announcements.Update(announcement);
                 var result =await _context.SaveChangesAsync(cancellationToken);
 
                 if(result == 0)
@@ -106,7 +104,7 @@ namespace Cronos.Application.Features.Announcement
 
             public async Task<bool> Handle(DeleteAnnouncementCommand request, CancellationToken cancellationToken)
             {
-                var announcement = await _context.Announcements.AsNoTracking().FirstOrDefaultAsync(c => c.Id == request.Id);
+                var announcement = await _context.Announcements.FirstOrDefaultAsync(c => c.Id == request.Id);
                 if (announcement == null)
                 {
                     return false;
@@ -116,16 +114,15 @@ namespace Cronos.Application.Features.Announcement
                 // 28.09.2022 Murat Çalışkan
                 if(announcement.IsDeleted == false)
                 {
-                    List<AnnouncementEntity> entities = await _context.Announcements.DisplayedEntitiesCms().AsNoTracking().ToListAsync();
+                    List<AnnouncementEntity> entities = await _context.Announcements.DisplayedEntitiesCms().ToListAsync();
                     var lastItem = entities.LastOrDefault();
                     int oldOrder = announcement.Order;
                     announcement.Order = lastItem.Order;
                     foreach (var item in entities)
                     {
-                        if (item.Order > oldOrder)
+                        if (item.Order > oldOrder && item.Id !=announcement.Id)
                         {
                             item.Order--;
-                            _context.Announcements.Update(item);
                         }
                     }
 
@@ -134,7 +131,6 @@ namespace Cronos.Application.Features.Announcement
 
                 announcement.IsDeleted = !announcement.IsDeleted;
                 announcement.ModifiedDate = DateTime.Now;
-                _context.Announcements.Update(announcement);
                 var result =await _context.SaveChangesAsync(cancellationToken);
                 if(result == 0)
                 {

@@ -27,7 +27,7 @@ namespace Cronos.Application.Features.Announcement
 
             public async Task<AnnouncementViewModel> Handle(GetAnnouncementQuery request, CancellationToken cancellationToken)
             {
-                var announcements = await _context.Announcements.DisplayedEntities().ToListAsync(cancellationToken);
+                var announcements = await _context.Announcements.DisplayedEntities().AsNoTracking().ToListAsync(cancellationToken);
 
                 AnnouncementViewModel announcementViewModel = new()
                 {
@@ -58,7 +58,7 @@ namespace Cronos.Application.Features.Announcement
 
             public async Task<AnnouncementCardViewModel> Handle(GetAnnouncementCardQuery request, CancellationToken cancellationToken)
             {
-                var announcements = await _context.Announcements.DisplayedEntities().ToListAsync(cancellationToken);
+                var announcements = await _context.Announcements.DisplayedEntities().AsNoTracking().ToListAsync(cancellationToken);
 
                 AnnouncementCardViewModel announcementCardViewModel = new()
                 {
@@ -126,7 +126,7 @@ namespace Cronos.Application.Features.Announcement
 
             public async Task<AnnouncementViewModel> Handle(GetAnnouncementCmsQuery request, CancellationToken cancellationToken)
             {
-                var announcements = await _context.Announcements.DisplayedEntitiesCms().ToListAsync(cancellationToken);
+                var announcements = await _context.Announcements.DisplayedEntitiesCms().AsNoTracking().ToListAsync(cancellationToken);
 
                 AnnouncementViewModel announcementViewModel = new()
                 {
