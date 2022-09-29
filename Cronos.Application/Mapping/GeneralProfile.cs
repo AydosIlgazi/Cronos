@@ -6,7 +6,10 @@ namespace Cronos.Application.Mapping
         public GeneralProfile()
         {
             CreateMap<BannerEntity, BannerDto>();
-
+            CreateMap<AnnouncementEntity, AnnouncementDto>();
+            CreateMap<AnnouncementEntity, AnnouncementCardDto>();
+            CreateMap<AnnouncementEntity, CreateAnnouncementDto>().ReverseMap();
+            CreateMap<UpdateAnnouncementDto, AnnouncementEntity>().ReverseMap();
         }
     }
 }
