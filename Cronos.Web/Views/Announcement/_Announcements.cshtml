@@ -1,30 +1,53 @@
 ﻿@using Cronos.Application.ViewModels
 @model AnnouncementCardViewModel
 
+<style type="text/css">
+    .post-slide .post-content{
+        background:#fff;
+        padding: 2px 20px 40px;
+        border-radius: 15px;
+    }
+    .post-slide .post-description{
+        line-height:24px;
+        color:#808080;
+        margin-bottom:25px;
+    }
 
-<div class="custom-news-slider-holder custom-base-slider-holder">
-    <div class="custom-news-slider swiper">
-        <div class="swiper-wrapper">
+    .post-slide .read-more{
+        padding: 7px 20px;
+        float: right;
+        font-size: 12px;
+        background: #2196F3;
+        color: #ffffff;
+        box-shadow: 0px 10px 20px -10px #1376c5;
+        border-radius: 25px;
+        text-transform: uppercase;
+    }
+    .post-slide .read-more:hover{
+        background: #3498db;
+        text-decoration:none;
+        color:#fff;
+    }
+</style>
+
+
+
+<div class="container">
+    <h1>DUYURULAR</h1>
+    <br />
+    <div class="row">
             @foreach (var item in Model.AnnouncementCards)
             {
-                <div class="swiper-slide">
-                    <div class="custom-base-item">
-                        <div class="custom-head">
-                            <span>@item.Header</span>
-                        </div>
-                        <div class="custom-body">
-                            <div class="custom-text">
-                                <span>@item.ShortDescription</span>
-                            </div>
-                            <div class="custom-read-more">
-                                <a href="@item.RedirectUrl" target="_blank">Devamı</a>
-                            </div>
-                        </div>
-                    </div>
+            <div class="post-slide col-4 mt-3">
+                <div class="post-content">
+                    <h3 class="post-title">
+                        @item.Header
+                    </h3>
+                    <p class="post-description">@item.ShortDescription</p>
+                    <a href="@item.RedirectUrl" target="_blank" class="read-more">Devamı</a>
                 </div>
+            </div>
             }
-            
-        </div>
     </div>
 </div>
 
