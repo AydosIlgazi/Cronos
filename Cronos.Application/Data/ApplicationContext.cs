@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Cronos.Application.Entities.Menu;
 using System.Reflection;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -16,48 +17,54 @@ namespace Cronos.Application.Data
             //dotnet ef database update --project .\Cronos.Application -s .\Cronos.Web
         }
         public DbSet<BannerEntity> Banners { get; set; }
+        public DbSet<AnnouncementEntity> Announcements { get; set; }
+        public DbSet<ActivityEntity> Activities { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
+        public DbSet<Menu> Menus { get; set; }
+
+        public DbSet<SubMenu> SubMenus { get; set; }
+
+
+        public DbSet<SubMenu2> SubMenus2 { get; set; }
         //23.09.2022 Irem Kesemen
+        
         public async Task<int> SaveChanges()
         {
             return await base.SaveChangesAsync();
         }
-    }
+    
 
+
+    }
+    
     public static class ApplicationContextExtensions
     {
         public static IQueryable<T> DisplayedEntities<T>(this DbSet<T> dbSet) where T : BaseEntity
         {
             return dbSet
                 .Where(
-                   b => b.IsActive == true 
-                    && b.StartDate >= DateTime.Now
+                   b => b.IsActive == true
+                    && b.StartDate <= DateTime.Now
                     && b.EndDate >= DateTime.Now)
                 .OrderBy(b => b.Order)
-                    .AsQueryable();
+                .AsQueryable();
+
         }
 
-        public static IQueryable<T> CmsDisplay<T>(this DbSet<T> dbSet) where T : BaseEntity
+        public static IQueryable<T> DisplayedEntitiesCms<T>(this DbSet<T> dbSet) where T : BaseEntity
         {
-            return dbSet
-                //.Where(
-                //    b => b.IsActive == true 
-                //    && b.StartDate <= DateTime.Now
-                //    && b.EndDate >= DateTime.Now)
-                .OrderBy(b => b.Order)
+            return dbSet.OrderBy(b => b.Order)
                     .AsQueryable();
         }
-
-
-
-
-
     }
  
+
+
+    
 }
 
