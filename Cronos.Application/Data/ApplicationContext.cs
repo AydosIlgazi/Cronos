@@ -37,14 +37,12 @@ namespace Cronos.Application.Data
         {
             return dbSet
                 .Where(
-                   b => b.IsActive == true 
+                   b => b.IsActive == true
                     && b.StartDate >= DateTime.Now
                     && b.EndDate >= DateTime.Now)
                 .OrderBy(b => b.Order)
-            return dbSet
-                    .Where(b => b.IsActive == true && b.IsDeleted == false)
-                    .OrderBy(b => b.Order)
-                    .AsQueryable();
+                .AsQueryable();
+
         }
         //Adminin, etkinliklerin tüm propertylerini görmesi için.  Gülderen Sungur 29.09.2022
         public static IQueryable<T> ShowAllEntity<T>(this DbSet<T> dbSet) where T : BaseEntity
@@ -73,6 +71,6 @@ namespace Cronos.Application.Data
  
 
 
-    }
+    
 }
 
