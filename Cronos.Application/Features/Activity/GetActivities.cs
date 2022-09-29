@@ -26,7 +26,7 @@ namespace Cronos.Application.Features.Activity
             }
             public async Task<ActivityViewModel> Handle(GetActivitiesQuery request, CancellationToken cancellationToken)
             {
-                var activities = await _context.Activities.DisplayedEntities().ToListAsync(cancellationToken);
+                var activities = await _context.Activities.DisplayedEntities().AsNoTracking().ToListAsync(cancellationToken);
 
                 ActivityViewModel activityViewModel = new ActivityViewModel()
                 {

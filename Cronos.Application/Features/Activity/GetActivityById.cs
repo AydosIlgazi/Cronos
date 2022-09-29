@@ -23,7 +23,7 @@ namespace Cronos.Application.Features.Activity
           
             public async Task<UpdateActivityViewModel> Handle(GetActivityByIdQuery request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Activities.Where(x => x.Id == request.Id).FirstOrDefaultAsync();
+                var activity = await _context.Activities.Where(x => x.Id == request.Id).AsNoTracking().FirstOrDefaultAsync();
                 if(activity == null) { return null; }
 
                 UpdateActivityViewModel activityUpdate = _mapper.Map<UpdateActivityViewModel>(activity);

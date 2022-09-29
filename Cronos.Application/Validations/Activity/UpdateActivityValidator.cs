@@ -17,8 +17,6 @@ namespace Cronos.Application.Validations
             RuleFor(b => b.EndDate).NotEmpty().WithMessage("Bu alan boş olamaz.");
             RuleFor(b => b.Order).NotEmpty().WithMessage("Bu alan boş olamaz.").GreaterThan(0).WithMessage("Sıra değeri 1den küçük olamaz."); ;
             RuleFor(b => b.locationUrl).Must(BeAValidUrl).WithMessage("Geçersiz URL");
-
-            RuleFor(b => b.StartDate).GreaterThanOrEqualTo(DateTime.Now).WithMessage("Başlangıç tarihi bugünün tarihinden önce olamaz");
             RuleFor(b => b.EndDate).GreaterThan(DateTime.Now).WithMessage("Bitiş tarihi bugünün tarihinden önce olamaz.")
                                    .GreaterThan(x => x.StartDate).WithMessage("Bitiş tarihi başlangıç tarihinden erken olamaz.");
         }

@@ -35,6 +35,7 @@ namespace Cronos.Application.Features.Activity
             public async Task<bool> Handle(AddActivityCommand request, CancellationToken cancellationToken)
             {
                 var activity = new ActivityEntity();
+
                 activity.Title = request.Title;
                 activity.StartDate = request.StartDate;
                 activity.EndDate = request.EndDate;
@@ -45,6 +46,29 @@ namespace Cronos.Application.Features.Activity
                 activity.Order = request.Order;
                 activity.IsActive = request.IsActive;
                 activity.IsDeleted = false;
+
+                //Araya yeni aktivity eklendiğinde, eklenen orderdan sonraki activity'nin order'ları 1er artar.
+
+                bool isSameOrder = false;
+                List<ActivityEntity> entities = await _context.Activities.ToListAsync();
+
+                foreach (var item in entities)
+                {
+                    if (item.Order == activity.Order)
+                    {
+                        isSameOrder = true;
+                    }
+                    if(isSameOrder == true)
+                    {
+                        if (item.Order >= activity.Order)
+                        {
+                            item.Order++;
+                        }
+                    }
+                }
+
+                //Order sonu
+
 
                 _context.Activities.Add(activity);
                 await _context.SaveChangesAsync();

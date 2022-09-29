@@ -2,17 +2,20 @@
 @model ActivityViewModel
 
 
+<h3>ACTIVITIES</h3>
+<div style="display:flex; gap:12px;">
 @foreach(var item in Model.Activities){
-    
-    <div>
-        <div>
-            <div>@item.Title</div>
-            <div>@item.Info</div>
-            <div>@item.StartDate</div>
-            <div>@item.EndDate</div>
-            <a href="@item.locationUrl">see location</a>
-            <a href="#">Devamı..</a>
-
+    <div class="card" style="width: 18rem; ">
+        <div class="card-body">
+            <h4 class="card-title">@item.Title</h4>
+                <p class="card-text" style="  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;">@item.Info</p>
+            <a href="@item.locationUrl" class="card-link">See Location</a>
+            <a href="#" target="_blank" class="card-link">Devamı</a>
         </div>
     </div>
+
 }
+</div>

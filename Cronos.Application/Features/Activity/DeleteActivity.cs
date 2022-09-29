@@ -26,6 +26,24 @@ namespace Cronos.Application.Features.Activity
                 {
                     return false;
                 }
+
+                if (activity.IsDeleted == false)
+                {
+                    List<ActivityEntity> entities = await _context.Activities.DisplayedEntitiesCms().ToListAsync();
+                    var lastItem = entities.LastOrDefault();
+                    int oldOrder = activity.Order;
+                    activity.Order = lastItem.Order;
+                    foreach (var item in entities)
+                    {
+                        if (item.Order > oldOrder && item.Id != activity.Id)
+                        {
+                            item.Order--;
+
+                        }
+                    }
+
+                }
+
                 activity.IsDeleted = !activity.IsDeleted;
                 activity.ModifiedDate = DateTime.Now;
                 _context.Activities.Update(activity);
