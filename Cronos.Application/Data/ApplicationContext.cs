@@ -17,6 +17,7 @@ namespace Cronos.Application.Data
         }
         public DbSet<BannerEntity> Banners { get; set; }
         public DbSet<AnnouncementEntity> Announcements { get; set; }
+        public DbSet<ActivityEntity> Activities { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -40,6 +41,16 @@ namespace Cronos.Application.Data
                     && b.StartDate >= DateTime.Now
                     && b.EndDate >= DateTime.Now)
                 .OrderBy(b => b.Order)
+            return dbSet
+                    .Where(b => b.IsActive == true && b.IsDeleted == false)
+                    .OrderBy(b => b.Order)
+                    .AsQueryable();
+        }
+        //Adminin, etkinliklerin tüm propertylerini görmesi için.  Gülderen Sungur 29.09.2022
+        public static IQueryable<T> ShowAllEntity<T>(this DbSet<T> dbSet) where T : BaseEntity
+        {
+            return dbSet
+                    .OrderBy(b => b.Order)
                     .AsQueryable();
         }
 
@@ -60,5 +71,8 @@ namespace Cronos.Application.Data
         }
     }
  
+
+
+    }
 }
 

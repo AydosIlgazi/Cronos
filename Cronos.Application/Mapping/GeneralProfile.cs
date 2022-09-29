@@ -1,4 +1,6 @@
 ﻿
+using Cronos.Application.Dtos.Activity;
+
 namespace Cronos.Application.Mapping
 {
     public class GeneralProfile : Profile
@@ -6,6 +8,8 @@ namespace Cronos.Application.Mapping
         public GeneralProfile()
         {
             CreateMap<BannerEntity, BannerDto>();
+            CreateMap<ActivityEntity, ActivityDto>();
+            CreateMap<ActivityEntity, UpdateActivityViewModel>().ReverseMap();
             CreateMap<AnnouncementEntity, AnnouncementDto>();
             CreateMap<AnnouncementEntity, AnnouncementCardDto>();
             CreateMap<AnnouncementEntity, CreateAnnouncementDto>().ReverseMap();
