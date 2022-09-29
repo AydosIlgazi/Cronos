@@ -1,6 +1,6 @@
-﻿using Cronos.Application.Validations;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Reflection;
 
 namespace Cronos.Application
@@ -15,6 +15,23 @@ namespace Cronos.Application
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("CronosDb")));
             //services.AddValidatorsFromAssemblyContaining<CreateBannerValidator>();
 
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("CronosDb"))
+            );
+
+
+
+            //25.09.2022 Irem Kesemen
+            services.AddControllers().AddFluentValidation(
+
+                fv => fv.RegisterValidatorsFromAssemblyContaining<BannerValidator>());
+            services.AddControllersWithViews();
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddValidatorsFromAssembly(typeof(ServiceRegistration).Assembly);
+
+            
         }
+
     }
+
+   
 }

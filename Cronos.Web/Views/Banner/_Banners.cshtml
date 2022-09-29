@@ -1,15 +1,47 @@
 ﻿@using Cronos.Application.ViewModels
 @model BannerViewModel
 
+<!doctype html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
 
+    <link rel="stylesheet" href="~/css/site.css/>
+    <script defer src="~/js/site.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+   @*"~/images/banner/98.yil_banner.jpg"*@
+<div class="book-container">
+
+    <button class="pre-btn">&larr;</button>
+    <button class="next-btn">&rarr;</button>
 @foreach (var item in Model.Banners)
 {
 
     <div class="swiper-slide">
-        @*<img src="~/assets/img/slider-02.jpg" />*@
-        <a href="@item.RedirectUrl" target="_blank">
-            <img src="@item.ImageUrl" />
-        </a>
+     <div class="numbertext">@item.Id</div>
+        <img src="~/images/banner/98.yil_banner.jpg" />
+        @*<a href="@item.RedirectUrl" target="_blank">
+                <img src=@item.ImageUrl class="responsive" />*@
+        @*</a>*@
     </div>
-}
 
+
+}
+</div>
+</body>
+<div style="text-align:center">
+    @foreach (var item in Model.Banners)
+    {
+        <span class="dot" onclick="nextSlide(@item.Id)"></span>
+    }
+
+
+</div></html>
