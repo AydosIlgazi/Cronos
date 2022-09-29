@@ -1,0 +1,81 @@
+﻿@model Cronos.Application.ViewModels.SubMenuViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/css/menuEditTable.css" rel="stylesheet" />
+    <title>Edit Menus</title>
+</head>
+<body>
+
+
+
+        <h4>Sub Menus Edit Page</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                @using (Html.BeginForm("Edit", "Menu", FormMethod.Post))
+                {
+
+                    <div class="form-group">
+
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Menu Name</th>
+                                    <th>Content</th>
+                                    <th>Menu Order</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Is Active</th>
+                                    <th>Is Deleted</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var menu in Model.SubMenus)
+                                {
+                                    <tr>
+                                        <td>@menu.Id</td>
+                                        <td><input type="text" name="MenuName" value="@menu.SubMenuName" /></td>
+                                        <td><input type="text" name="Content" value="@menu.Content" /></td>
+                                        <td>
+                                            <input type="text" name="MenuOrder" value="@menu.Order" />
+                                        </td>
+                                        <td><input name="StartDate" type="datetime-local" value="@menu.StartDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
+                                        <td><input name="EndDate" type="datetime-local" value="@menu.EndDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
+                                        <td><input name="IsActive" value="@menu.IsActive" type="checkbox" @(menu.IsActive? "checked" : "") /></td>
+                                        <td><input name="IsDeleted" value="@menu.IsActive" type="checkbox" @(menu.IsDeleted? "checked" : "") /></td>
+                                    </tr>
+                                }
+
+
+
+
+                            </tbody>
+                        </table>
+
+
+
+                        <input type="submit" value="Edit" class="btn btn-primary" />
+                    </div>
+                }
+            </div>
+        </div>
+
+
+
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
+
+
+    </body>
+    </html>

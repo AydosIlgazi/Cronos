@@ -6,6 +6,7 @@ using System.Diagnostics;
 using static Cronos.Application.Features.Activity.GetActivities;
 using static Cronos.Application.Features.Banner.GetBanners;
 using static Cronos.Application.Features.Announcement.GetAnnouncements;
+using static Cronos.Application.Features.Menu.GetAllMenus;
 
 namespace Cronos.Controllers
 {
@@ -29,6 +30,7 @@ namespace Cronos.Controllers
             viewModel.AnnouncementCardViewModel = await _mediator.Send(new GetAnnouncementCardQuery());
             viewModel.ActivityViewModel = await _mediator.Send(new GetActivitiesQuery());
             System.Diagnostics.Debug.WriteLine(viewModel);
+            viewModel.MenuViewModel = await _mediator.Send(new GetAllMenusQuery());
             return View(viewModel);
         }
 

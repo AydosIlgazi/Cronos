@@ -1,4 +1,6 @@
 ﻿
+using Cronos.Application.Entities.Menu;
+
 using Cronos.Application.Dtos.Activity;
 
 namespace Cronos.Application.Mapping
@@ -17,6 +19,10 @@ namespace Cronos.Application.Mapping
 
             //28.09.2022 Irem Kesemen
             CreateMap<BannerEntity, BannerUpdateViewModel>().ReverseMap();
+            CreateMap<Menu, MenusDto>();
+            CreateMap<SubMenu, SubMenusDto>();
+            CreateMap<SubMenu2, SubMenus2Dto>();
+            CreateMap<MenusDto, Menu>();
         }
     }
 }

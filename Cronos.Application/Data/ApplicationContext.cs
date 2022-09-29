@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Cronos.Application.Entities.Menu;
 using System.Reflection;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -24,13 +25,21 @@ namespace Cronos.Application.Data
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
+        public DbSet<Menu> Menus { get; set; }
+
+        public DbSet<SubMenu> SubMenus { get; set; }
+
+
+        public DbSet<SubMenu2> SubMenus2 { get; set; }
+    }
+
         //23.09.2022 Irem Kesemen
         public async Task<int> SaveChanges()
         {
             return await base.SaveChangesAsync();
         }
     }
-
+    
     public static class ApplicationContextExtensions
     {
         public static IQueryable<T> DisplayedEntities<T>(this DbSet<T> dbSet) where T : BaseEntity
