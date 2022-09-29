@@ -35,7 +35,7 @@ namespace Cronos.Application.Features.Banner
                 if (product == null) return false;
                 
                 if (product.IsDeleted == false) { 
-                List<BannerEntity> entities = await _context.Banners.CmsDisplay().AsNoTracking().ToListAsync();
+                List<BannerEntity> entities = await _context.Banners.DisplayedEntitiesCms().AsNoTracking().ToListAsync();
                 var order = entities.LastOrDefault();
                     int oldorder = product.Order;
 

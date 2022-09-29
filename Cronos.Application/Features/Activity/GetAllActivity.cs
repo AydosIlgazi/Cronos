@@ -22,7 +22,7 @@ namespace Cronos.Application.Features.Activity
 
             public async Task<ActivityViewModel> Handle(GetAllActivityQuery request, CancellationToken cancellationToken)
             {
-                var activities = await _context.Activities.ShowAllEntity().ToListAsync(cancellationToken);
+                var activities = await _context.Activities.DisplayedEntitiesCms().ToListAsync(cancellationToken);
 
                 ActivityViewModel activityViewModel = new ActivityViewModel()
                 {
