@@ -9,16 +9,17 @@
 
     <meta name="viewport" content="width=device-width" />
     <link href="~/css/menuEditTable.css" rel="stylesheet" />
-    <title>Edit Menus</title>
+    <title>Edit SubMenus</title>
 </head>
 <body>
 
+  
 
 
         <h4>Sub Menus Edit Page</h4>
         <hr />
-        <div class="row">
-            <div class="col-md-4">
+    <div class="row">
+            <div class="col-md-12">
                 @using (Html.BeginForm("Edit", "Menu", FormMethod.Post))
                 {
 
@@ -31,27 +32,36 @@
                                     <th>ID</th>
                                     <th>Menu Name</th>
                                     <th>Content</th>
-                                    <th>Menu Order</th>
+                                    <th>Sub Menu Order</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Is Active</th>
                                     <th>Is Deleted</th>
+                                    <th>Edit Item</th>
+                                    <th>Delete Item</th>
                             </thead>
                             <tbody>
                                 @foreach (var menu in Model.SubMenus)
                                 {
+
+
+
                                     <tr>
+
                                         <td>@menu.Id</td>
-                                        <td><input type="text" name="MenuName" value="@menu.SubMenuName" /></td>
-                                        <td><input type="text" name="Content" value="@menu.Content" /></td>
+                                    <td><input disabled type="text" name="SubMenuName" value="@menu.SubMenuName" /></td>
+                                        <td><input disabled type="text" name="Content" value="@menu.Content" /></td>
                                         <td>
-                                            <input type="text" name="MenuOrder" value="@menu.Order" />
+                                        <input disabled type="text" name="Order" value="@menu.Order" />
                                         </td>
-                                        <td><input name="StartDate" type="datetime-local" value="@menu.StartDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
-                                        <td><input name="EndDate" type="datetime-local" value="@menu.EndDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
-                                        <td><input name="IsActive" value="@menu.IsActive" type="checkbox" @(menu.IsActive? "checked" : "") /></td>
-                                        <td><input name="IsDeleted" value="@menu.IsActive" type="checkbox" @(menu.IsDeleted? "checked" : "") /></td>
+                                        <td><input disabled name="StartDate" type="datetime-local" value="@menu.StartDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
+                                        <td><input disabled name="EndDate" type="datetime-local" value="@menu.EndDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
+                                        <td><input disabled name="IsActive" value="@menu.IsActive" type="checkbox" @(menu.IsActive? "checked" : "") /></td>
+                                        <td><input disabled name="IsDeleted" value="@menu.IsDeleted" type="checkbox" @(menu.IsDeleted? "checked" : "") /></td>
+                                        <td><a asp-action="editSubMenu" asp-route-id="@menu.Id" asp class="btn btn-warning">Edit</a></td>
+                                        <td><a asp-action="deleteSubMenu" asp-route-id="@menu.Id" asp class="btn btn-danger">Delete</a></td>
                                     </tr>
+
                                 }
 
 
@@ -62,12 +72,12 @@
 
 
 
-                        <input type="submit" value="Edit" class="btn btn-primary" />
+
                     </div>
                 }
             </div>
         </div>
-
+        <a asp-action="addSubMenu" class="btn btn-info">Yeni Alt Menü Ekle</a>
 
 
         @section Scripts {
@@ -79,3 +89,9 @@
 
     </body>
     </html>
+
+
+
+
+
+

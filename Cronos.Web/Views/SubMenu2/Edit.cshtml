@@ -8,18 +8,18 @@
 
 
     <meta name="viewport" content="width=device-width" />
-
-    <title>List Sub Menu2</title>
+    <link href="~/css/menuEditTable.css" rel="stylesheet" />
+    <title>Edit SubMenus2</title>
 </head>
 <body>
+
     <partial name="~/Views/Menu/_Menu.cshtml" for="@Model.MenuViewModel">
 
 
-
-    <h4>List Sub Menus2 Page</h4>
+    <h4>Sub Menus2 Edit Page</h4>
     <hr />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             @using (Html.BeginForm("Edit", "Menu", FormMethod.Post))
             {
 
@@ -32,27 +32,36 @@
                                 <th>ID</th>
                                 <th>Menu Name</th>
                                 <th>Content</th>
-                                <th>Menu Order</th>
+                                <th>Sub Menu Order</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Is Active</th>
                                 <th>Is Deleted</th>
+                                <th>Edit Item</th>
+                                <th>Delete Item</th>
                         </thead>
                         <tbody>
                             @foreach (var menu in Model.MenuViewModel.SubMenus2)
                             {
+
+
+
                                 <tr>
+
                                     <td>@menu.Id</td>
-                                    <td><input disabled type="text" name="MenuName" value="@menu.SubMenuName" /></td>
+                                    <td><input disabled type="text" name="SubMenuName" value="@menu.SubMenuName" /></td>
                                     <td><input disabled type="text" name="Content" value="@menu.Content" /></td>
                                     <td>
-                                        <input disabled type="text" name="MenuOrder" value="@menu.Order" />
+                                        <input disabled type="text" name="Order" value="@menu.Order" />
                                     </td>
                                     <td><input disabled name="StartDate" type="datetime-local" value="@menu.StartDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
                                     <td><input disabled name="EndDate" type="datetime-local" value="@menu.EndDate.ToString("yyyy-MM-dd HH:mm:ss")" /></td>
                                     <td><input disabled name="IsActive" value="@menu.IsActive" type="checkbox" @(menu.IsActive? "checked" : "") /></td>
-                                    <td><input disabled name="IsDeleted" value="@menu.IsActive" type="checkbox" @(menu.IsDeleted? "checked" : "") /></td>
+                                    <td><input disabled name="IsDeleted" value="@menu.IsDeleted" type="checkbox" @(menu.IsDeleted? "checked" : "") /></td>
+                                    <td><a asp-action="editSubMenu2" asp-route-id="@menu.Id" asp class="btn btn-warning">Edit</a></td>
+                                    <td><a asp-action="deleteSubMenu2" asp-route-id="@menu.Id" asp class="btn btn-danger">Delete</a></td>
                                 </tr>
+
                             }
 
 
@@ -68,7 +77,7 @@
             }
         </div>
     </div>
-
+    <a asp-action="addSubMenu2" class="btn btn-info">Yeni Alt Menü Ekle</a>
 
 
     @section Scripts {
@@ -80,3 +89,8 @@
 
     </body>
     </html>
+
+
+
+
+

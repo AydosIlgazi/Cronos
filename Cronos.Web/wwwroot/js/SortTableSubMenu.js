@@ -26,10 +26,12 @@ const orderMenus = [];
 
 const listItems = [];
 
+var parentId;
 
-const apiUrl = window.location.origin + "/api/menu/getAllMenusByOrder";
 
-const saveOrderUrl = window.location.origin +"/api/menu/saveMenuOrders"
+
+
+const saveOrderUrl = window.location.origin + "/api/submenu/saveSubMenuOrders"
 
 var menus;
 
@@ -37,7 +39,7 @@ var menus;
 
 
 function saveOrder() {
-    var orderedMenus=[]
+    var orderedMenus = []
 
     listItems.map((item) => {
         //console.log("item", item);
@@ -51,13 +53,13 @@ function saveOrder() {
     })
     //refresh page so new order must be update to save
 
-   setTimeout(() => location.reload(), 700);
-    
+    setTimeout(() => location.reload(), 700);
+
 
     //console.log("ordered Menus", orderedMenus)
 
 
-   
+
 
 
 
@@ -73,7 +75,7 @@ function saveOrder() {
         .then(function (res) { console.log(res) })
         .catch(function (res) { console.log(res) })
     toastr.success("Sıralama Başarıyla Kaydedildi!");
-    
+
 }
 
 
@@ -81,12 +83,14 @@ function saveOrder() {
 $(document).ready(() => setTable());
 
 var setTable = function () {
+    parentId = document.getElementById("ParentId").value
+    const apiUrl = window.location.origin + `/api/submenu/getAllSubMenusByOrder/${parentId}`;
 
-  //  console.log("url", apiUrl)
+    //  console.log("url", apiUrl)
     fetch(apiUrl).then((response) => response.json())
         .then((data) => {
 
-           
+
             //gelen json verisini Order propertysine göre  sırala
             data = data.sort((a, b) => {
                 if (a.Order < b.Order) {
@@ -95,20 +99,20 @@ var setTable = function () {
             });
 
 
-           //    console.log("veri", data);
+            console.log("gelen veri", data);
             for (var i = 0; i < data.length; i++) {
                 if (data[i].IsActive == true && data[i].IsDeleted == false) {
-                  orderMenus.push({"Id":data[i].Id, "name":data[i].MenuName,"Order":data[i].Order })
-             
+                    orderMenus.push({ "Id": data[i].Id, "name": data[i].SubMenuName, "Order": data[i].Order })
+
 
                 }
             }
 
-           /* console.log("orderMenus", orderMenus);*/
+            /* console.log("orderMenus", orderMenus);*/
             createList();
         }
 
-    );
+        );
 
 }
 
@@ -119,7 +123,7 @@ let dragStartIndex;
 function createList() {
     const newList = [...orderMenus];
     newList
-        .map((menu) => ({ value: menu})) // randomize list
+        .map((menu) => ({ value: menu })) // randomize list
         .sort((a, b) => a.sort - b.sort) // generate new order
         .map((menu) => menu.value) // retrieve original strings
         .forEach((menu, index) => {
@@ -134,7 +138,7 @@ function createList() {
          <p  hidden class="id">${menu.Id}</p>
           </div>
         `;
-            
+
             listItems.push(listItem);
             draggableList.appendChild(listItem);
         });
@@ -151,19 +155,19 @@ function dragEnter() {
 
 function dragLeave() {
     this.classList.remove("over");
-    
+
 }
 
 function dragOver(e) {
     e.preventDefault(); // dragDrop is not executed otherwise
-   
+
 }
 
 function dragDrop() {
     const dragEndIndex = +this.getAttribute("data-index");
 
-    
-    this.setAttribute("Order", parseInt(this.getAttribute("data-index"))+1)
+
+    this.setAttribute("Order", parseInt(this.getAttribute("data-index")) + 1)
     swapItems(dragStartIndex, dragEndIndex);
     this.classList.remove("over");
     saveOrder();

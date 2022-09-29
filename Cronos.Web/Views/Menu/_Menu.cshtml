@@ -2,25 +2,33 @@
 @using Cronos.Application.Dtos
 
 
+@*Use this pages for testing at below
+
+https://localhost:7177/cms/submenu/edit
+
+https://localhost:7177/cms/submenu2/edit
+
+
+https://localhost:7177/cms/menu/edit
+
+
+
+
+*@
+
+
 @*Kullanışlı methodlar ve Değişkenler .--Ş.GEYİK--22.09.22*@
 @{
 
-    //bool hasSubMenuChild(int parentId){
-    //    if (Model.SubMenus.Count(submenu => submenu.ParentId == id) == 0)
-    //    {
-    //        return false;
-    //    }
 
-    //    return true;
-    //}
 
     IOrderedEnumerable<SubMenusDto> getSubMenusById(int id)
     {
-        return Model.SubMenus.FindAll(submenu => submenu.ParentId == id).OrderBy(submenu => submenu.Order);
+        return Model.SubMenus.FindAll(submenu => submenu.ParentId == id).Where(submenu => submenu.IsDeleted == false).OrderBy(submenu => submenu.Order);
     }
     IOrderedEnumerable<SubMenus2Dto> getSubMenus2ById(int id)
     {
-        return Model.SubMenus2.FindAll(submenu => submenu.ParentId == id).OrderBy(submenu => submenu.Order);
+        return Model.SubMenus2.FindAll(submenu => submenu.ParentId == id).Where(submenu => submenu.IsDeleted == false).OrderBy(submenu => submenu.Order);
     }
 
    
@@ -130,12 +138,12 @@
                                                             var secondDegreesSubMenu = getSubMenus2ById(submenu.Id);
                                                         }
 
-                                                        <div class="secondDegreeSubMenuContainer submenu">
+                                                        
                                                             @foreach (var subMenu2 in secondDegreesSubMenu)
                                                             {
-                                                                if (subMenu2.IsActive == true && subMenu2.IsDeleted == false)
-                                                                {
-
+                                                            <div class="secondDegreeSubMenuContainer submenu">
+                                                               
+                                               
                                                                     <ul>
 
                                                                         <li class="menu-item"><a href="@subMenu2.Content" class="submenu-link">@subMenu2.SubMenuName</a></li>
@@ -143,11 +151,12 @@
 
                                                                     </ul>
 
-
-                                                                }
+                                                                  
+                                                                
+                                                            </div>
                                                             }
-                                                        </div>
-
+                                                       
+                                                       
 
 
                                                     </li>
