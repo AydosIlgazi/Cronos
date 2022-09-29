@@ -21,7 +21,7 @@ namespace Cronos.Controllers
             _mediator = mediator;
         }
 
-        //[Route("cms/home/index")]
+
         public async Task<IActionResult> Index()
         
         {

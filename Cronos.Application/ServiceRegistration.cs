@@ -19,8 +19,6 @@ namespace Cronos.Application
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(configuration.GetConnectionString("CronosDb")));
             services.AddValidatorsFromAssemblyContaining<CreateActivityValidator>();
             
-            //services.AddValidatorsFromAssemblyContaining<CreateBannerValidator>();
-
 
 
 
