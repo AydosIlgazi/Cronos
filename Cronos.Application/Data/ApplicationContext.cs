@@ -50,11 +50,8 @@ namespace Cronos.Application.Data
                 //    b => b.IsActive == true 
                 //    && b.StartDate <= DateTime.Now
                 //    && b.EndDate >= DateTime.Now)
-                .OrderBy(b => b.Order)
-            return dbSet.Where(
-                    b => b.IsActive == true && b.IsDeleted==false && b.StartDate <= DateTime.Now
-                    && b.EndDate >= DateTime.Now).OrderBy(b => b.Order)
-                    .AsQueryable();
+                .OrderBy(b => b.Order);
+
         }
         public static IQueryable<T> DisplayedEntitiesCms<T>(this DbSet<T> dbSet) where T : BaseEntity
         {
