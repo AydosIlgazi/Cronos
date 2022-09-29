@@ -28,11 +28,11 @@ namespace Cronos.Application.Features.Menu
             public async Task<MenusViewModel> Handle(GetAllMenusQuery request, CancellationToken cancellationToken)
             {
 
-                var menus = await _context.Menus.DisplayedEntities().ToListAsync(cancellationToken);
+                var menus = await _context.Menus.DisplayedEntities().AsNoTracking().ToListAsync(cancellationToken);
 
-                var submenus = await _context.SubMenus.DisplayedEntities().ToListAsync(cancellationToken);
+                var submenus = await _context.SubMenus.DisplayedEntities().AsNoTracking().ToListAsync(cancellationToken);
 
-                var submenus2 = await _context.SubMenus2.DisplayedEntities().ToListAsync(cancellationToken);
+                var submenus2 = await _context.SubMenus2.DisplayedEntities().AsNoTracking().ToListAsync(cancellationToken);
 
                 MenusViewModel menuViewModel = new MenusViewModel()
                 {

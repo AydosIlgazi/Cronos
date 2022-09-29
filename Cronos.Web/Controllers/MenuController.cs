@@ -160,8 +160,6 @@ namespace Cronos.Web.Controllers
 
 
 
-
-
         }
 
 
@@ -203,20 +201,6 @@ namespace Cronos.Web.Controllers
         public async Task<IActionResult?> DeleteMenu(MenusDto menu)
         {
 
-
-            //set order to max order deleted menu before deleting process Ş.geyik || 28.09.22
-            //MenuViewModel viewModel = new MenuViewModel();
-
-            //viewModel = await _mediator.Send(new GetMenusQuery());
-
- 
-        
-            //    menu.Order = viewModel.Menus..OrderByDescending(menu => menu.Order).First().Order + 1;
-            //    await _mediator.Send(new UpdateMenuCommand(menu));
-            
-          
-
-          
 
             if (menu != null)
             {

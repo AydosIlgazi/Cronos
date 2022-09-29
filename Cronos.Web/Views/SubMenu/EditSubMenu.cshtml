@@ -1,0 +1,144 @@
+﻿@model Cronos.Application.Dtos.SubMenusDto
+
+<html>
+<head>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link href="~/css/draggabletable.css" rel="stylesheet" />
+</head>
+<body>
+
+
+    @using (Html.BeginForm(FormMethod.Post, new { role = "form", id = "editForm" }))
+    {
+        //input Id should be hidden || Ş.Geyik || 28.09.22
+        <input  hidden value="@Model.Id" name="Id" />
+        //to get parent id with js to send api || Ş.Geyik ||29.09.22
+        <input id="ParentId" name="ParentId" hidden value="@Model.ParentId" />
+
+
+        <input hidden value="@TempData["result"]" id="result" />
+
+        <div class="form-group row">
+            <label for="SubMenuAdi" class="col-sm-2 col-form-label">Alt Menü Adı:</label>
+            <div class="col-sm-7">
+                <input type="text" required name="SubMenuName" class="form-control" value="@Model.SubMenuName">
+            </div>
+        </div>
+
+
+        <br />
+
+
+        <div class="form-group row">
+            <label for="Icerik" class="col-sm-2 col-form-label">İçerik:</label>
+            <div class="col-sm-7">
+                <input type="text" required name="Content" class="form-control" value="@Model.Content">
+            </div>
+        </div>
+
+        <br />
+        <input hidden disabled name="ModifiedDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" />
+
+        <br />
+        <div class="form-group row">
+            <label for="BaslangicZamani" class="col-sm-2 col-form-label">Başlangıç Zamanı:</label>
+            <div class="col-sm-7">
+
+                @Html.TextBoxFor(x => Model.StartDate, "{0:yyyy-MM-ddTHH:mm:ss}", new
+            {
+            @class = "form-control",
+            required = "required",
+            @type = "datetime-local",
+            @name="StartDate"
+            })
+
+            </div>
+        </div>
+
+        <br />
+
+
+        <div class="form-group row">
+            <label for="BitisZamani" class="col-sm-2 col-form-label">Bitiş Zamanı:</label>
+            <div class="col-sm-7">
+
+                @Html.TextBoxFor(x => Model.EndDate, "{0:yyyy-MM-ddTHH:mm:ss}", new
+            {
+            @class = "form-control",
+            required = "required",
+            @type = "datetime-local",
+            @name="EndDate"
+            })
+
+
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+            <label for="Icerik" class="col-sm-2 col-form-label">Sırası:</label>
+            <div class="col-sm-7">
+
+                @Html.TextBoxFor(x => Model.Order, new
+            {
+            @class = "form-control",
+            @type = "text",
+            @name="Order",
+            @hidden="true",
+            @value=Model.Order
+            })
+
+                <p class="text-primary">Sıralamayı değiştirmek için kutuları sürükleyin!</p>
+
+                <ul class="draggable-list" id="draggable-list"></ul>
+                @*  <a onclick="saveOrder()" id="check" class="check-btn">
+            Sırayı Kaydet
+            </a>*@
+
+
+
+            </div>
+        </div>
+
+        <br />
+        <div class="form-group row">
+            <label for="IsActive" class="col-sm-2 col-form-label">Aktif mi?:</label>
+            <div class="col-sm-7">
+                @Html.EditorFor(menu => menu.IsActive)
+            </div>
+
+        </div>
+        <br />
+
+        <div class="form-group row">
+            <label for="IsDeleted" class="col-sm-2 col-form-label">Silinmiş mi?:</label>
+            <div class="col-sm-7">
+                @Html.EditorFor(submenu => submenu.IsDeleted)
+            </div>
+        </div>
+
+
+
+
+        <span>  <input type="submit" class="btn btn-warning" value="Kaydet" /></span>
+    }
+
+
+
+
+
+
+
+    @section Scripts {
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="~/js/editmenu.js"></script>
+        <script src="~/js/SortTableSubMenu.js"></script>
+
+    }
+
+
+    </body>
+
+    </html>

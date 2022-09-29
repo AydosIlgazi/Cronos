@@ -1,0 +1,133 @@
+﻿@model Cronos.Application.ViewModels.HomeViewModel
+<html>
+<head>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <partial name="~/Views/Menu/_Menu.cshtml" for="@Model.MenuViewModel">
+
+
+    @using (Html.BeginForm(FormMethod.Post, new { role = "form", id = "addForm" }))
+    {
+
+        <input hidden value="@TempData["result"]" id="result" />
+
+        <div class="form-group row">
+            <label for="MenuAdi" class="col-sm-2 col-form-label">Alt Menü Adı:</label>
+            <div class="col-sm-7">
+                <input type="text" required name="SubMenuName" class="form-control">
+            </div>
+        </div>
+
+
+        <br />
+
+
+        <div class="form-group row">
+            <label for="Icerik" class="col-sm-2 col-form-label">İçerik:</label>
+            <div class="col-sm-7">
+                <input type="text" required name="Content" class="form-control">
+            </div>
+        </div>
+
+        <br />
+        <input hidden disabled name="ModifiedDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" />
+        <input hidden disabled name="CreatedDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" />
+        <br />
+        <div class="form-group row">
+            <label for="BaslangicZamani" class="col-sm-2 col-form-label">Başlangıç Zamanı:</label>
+            <div class="col-sm-7">
+                <input name="StartDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" />
+
+            </div>
+        </div>
+
+        <br />
+
+
+        <div class="form-group row">
+            <label for="BitisZamani" class="col-sm-2 col-form-label">Bitiş Zamanı:</label>
+            <div class="col-sm-7">
+
+                <input name="EndDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" />
+
+            </div>
+        </div>
+        <br />
+        <div class="form-group row">
+
+
+            @*Default Order *@
+            <input type="text" name="Order" value="@TempData["maxOrder"]" hidden />
+        </div>
+
+        <br />
+        <div class="form-group row">
+            <label for="IsActive" class="col-sm-2 col-form-label">Aktif mi?:</label>
+            <div class="col-sm-7">
+                <input data-val="true" checked value="true" type="checkbox" name="IsActive" />
+            </div>
+
+        </div>
+        <br />
+
+          <div class="form-group row">
+            <label for="ParentId" class="col-sm-2 col-form-label">Bağlı olacağı üst kırılımı seçiniz:</label>
+            <div class="col-sm-7">
+     @*  Buraya menus gelecek active ve delete olmayanlar*@
+
+
+
+                    <select name="ParentId" >
+                        @foreach(var menu in Model.MenuViewModel.Menus){
+
+                            if(menu.IsDeleted==false && menu.IsActive==true){
+                                <option value="@menu.Id">@menu.MenuName</option>
+                            }
+                           
+                        }
+                        
+                      
+                    </select>
+        <br />
+
+     
+
+            </div>
+
+        </div>
+        <br />
+
+
+        @*     <div class="form-group row">
+    <label for="IsDeleted" class="col-sm-2 col-form-label">Silinmiş mi?:</label>
+    <div class="col-sm-7">
+    <input data-val="true" and value="true" type="checkbox" name="IsDeleted" />
+    </div>
+    </div>*@
+
+
+
+
+        <span>  <input type="submit" class="btn btn-primary" value="Kaydet" /></span>
+    }
+
+
+    @* Dont forget to add Modified Date time.now() Ş.geyik | 26.09.22*@
+
+
+
+
+    @section Scripts {
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="~/js/editmenu.js"></script>
+
+    }
+
+
+    </body>
+
+    </html>
