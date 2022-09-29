@@ -89,6 +89,11 @@ namespace Cronos.Web.Controllers
             }
             else
             {
+                foreach (var state in ModelState.Values)
+                {
+                    if (state.Errors.Count > 0)
+                        state.Errors.Clear();
+                }
                 foreach (var item in result.Errors)
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
