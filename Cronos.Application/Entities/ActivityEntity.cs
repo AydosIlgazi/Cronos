@@ -10,7 +10,7 @@ namespace Cronos.Application.Entities
     {
         public string Title { get; set; }
         public string Info { get; set; }
-        public string locationUrl { get; set; } 
+        public string? locationUrl { get; set; } 
 
     }
 }

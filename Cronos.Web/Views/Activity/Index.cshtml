@@ -23,7 +23,11 @@
             <td>@item.Info</td>
             <td>@item.StartDate</td>
             <td>@item.EndDate</td>
+            @if(item.locationUrl == null){
+            <td>Konum bilgisi bulunmamaktadır</td>
+            }else{
             <td>@item.locationUrl</td>
+            }
             <td>@item.Order</td>
             <td>@item.IsDeleted</td>
             <td>@item.IsActive</td>

@@ -11,7 +11,7 @@ namespace Cronos.Application.Dtos.Activity
         public string Id { get; set; }
         public string Title { get; set; }
         public string Info { get; set; }
-        public string locationUrl { get; set; } 
+        public string? locationUrl { get; set; } 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsActive { get; set; }

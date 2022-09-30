@@ -12,7 +12,7 @@ namespace Cronos.Application.Validations
         public CreateActivityValidator()
         {
             RuleFor(b => b.Title).NotEmpty().WithMessage("Bu alan boş olamaz.").MaximumLength(50).WithMessage("Bu alan 50 karakterden fazla olamaz.");
-            RuleFor(b => b.Info).NotEmpty().WithMessage("Bu alan boş olamaz.").Length(1, 250).WithMessage("Bu alan 250 karakterden fazla olamaz.");
+            RuleFor(b => b.Info).NotEmpty().WithMessage("Bu alan boş olamaz.");
             RuleFor(b => b.StartDate).NotEmpty().WithMessage("Bu alan boş olamaz.");
             RuleFor(b => b.EndDate).NotEmpty().WithMessage("Bu alan boş olamaz.");
             RuleFor(b => b.Order).NotEmpty().WithMessage("Bu alan boş olamaz.").GreaterThan(0).WithMessage("Sıra değeri 1den küçük olamaz.");;
@@ -24,8 +24,10 @@ namespace Cronos.Application.Validations
 
         private static bool BeAValidUrl(string arg)
         {
-            Uri result;
-            return Uri.TryCreate(arg, UriKind.Absolute, out result);
+            Uri outUri;
+            return Uri.TryCreate(arg, UriKind.Absolute, out outUri)
+                   && (outUri.Scheme == Uri.UriSchemeHttp || outUri.Scheme == Uri.UriSchemeHttps);
+
         }
 
 
