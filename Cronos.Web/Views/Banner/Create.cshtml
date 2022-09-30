@@ -1,5 +1,5 @@
-﻿@using Cronos.Application.Entities
-@model BannerEntity
+﻿@using Cronos.Application.Dtos
+@model BannerDto
 
 <!doctype html>
 <html lang="en">
@@ -12,93 +12,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+   
 
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
-    <link rel="stylesheet" href="~/css/site.css   />
-    <script defer src="~/js/site.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
-
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   
 
 </head>
 <body>
-    <form method="post" asp-action="Create" id="form2" >
+     <form method="post" asp-action="create" id="form2">
         <div class="form-group">
             <label asp-for="ImageUrl">Görüntü Url</label>
-            <input asp-for="ImageUrl" class="form-control" id="ImageUrl" >
-           
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert">
-           
-                @*@Html.ValidationSummary(true)*@
-            @*   <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>*@
+            <input asp-for="ImageUrl" class="form-control" id="ImageUrl">
 
-           </div>
-           @Html.ValidationMessageFor(m=>m.ImageUrl,"", new { @class="text-danger" })
-    </div>
+             
+            @Html.ValidationMessageFor(m=>m.ImageUrl,"", new { @class="text-danger" })
+            </div>
+       
 
-            <div class="form-group">
-    <label asp-for="AltText">Alt Metin</label>
-    <input asp-for="AltText" class="form-control" id="AltText" >
-            @Html.ValidationMessageFor(m=>m.AltText,"", new { @class="text-danger" })
-    
-    </div>
-    <div class="form-group">
-    <label asp-for="RedirectUrl">Redirect Url</label>
-    <input asp-for="RedirectUrl" class="form-control" id="RedirectUrl" >
+        <div class="form-group">
+            <label asp-for="AltText">Alt Metin</label>
+            <input asp-for="@Model.AltText" class="form-control" id="AltText">
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.AltText)</span>
+
+        </div>
+        <div class="form-group">
+            <label asp-for="RedirectUrl">Redirect Url</label>
+            <input asp-for="RedirectUrl" class="form-control" id="RedirectUrl">
             @Html.ValidationMessageFor(m=>m.RedirectUrl,"", new { @class="text-danger" })
-    </div>
+        </div>
 
-    <div class="form-group">
-    <label asp-for="StartDate">Başlangıç Tarihi</label>
+        <div class="form-group">
+            <label asp-for="StartDate">Başlangıç Tarihi</label>
             <input asp-for="StartDate" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" id="StartDate">
 
-            
-            @Html.ValidationMessageFor(m=>m.StartDate,"", new { @class="text-danger" })
-    
 
-    </div>
-    <div class="form-group">
-    <label asp-for="EndDate">Bitiş Tarihi</label>
+            <span class="text-danger">@Html.ValidationMessageFor(x => x.StartDate)</span>
+
+
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate">Bitiş Tarihi</label>
             <input asp-for="EndDate" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" id="EndDate">
             @Html.ValidationMessageFor(m=>m.EndDate,"", new { @class="text-danger" })
+
+        </div>
+        <br />
+        <div class="form-group">
+            <label asp-for="IsActive">Aktif Mi?</label>
+            <input data-val="true"
+                   data-val-required="The isActive field is required."
+                   id="IsActive"
+                   name="IsActive"
+                   type="checkbox"
+                   value="true"
+                   checked/>
            
-    </div>
-    <br />
-    <div class="form-group">
-    <label asp-for="IsActive">Aktif Mi?</label>    
-    <input data-val="true"
-    data-val-required="The isActive field is required."
-    id="IsActive"
-    name="IsActive"
-    type="checkbox"
-    value="true"
-    checked/>
-            
-    </div>
-    <div class="form-group">
+        </div>
+       @* <div class="form-group" id="IsDeleted">
+            <label asp-for="IsActive">Silindi Mi?</label>
 
-    <label asp-for="Order">Sıra</label>
-    <input asp-for="Order" class="form-control"  id="Order" >
-          
-            <span asp-validation-for="@Model.Order" class="text-danger"></span>
-    </div>
-
-    </br>
-
-  @*  <div class="btn btn-primary" id="btnSave">
-         <p1>Kaydet</p1>
-    </div>*@
-     @*   <div class="btn btn-primary" id="btnSubmit">
-            <p1>Sub</p1>
+            @Html.CheckBoxFor(m => m.IsDeleted)
+            <span asp-validation-for="IsDeleted" class="text-danger"></span>
         </div>*@
-    
-            <button class="btn btn-primary" style="visibility:visible">Kaydet</button>
-            <a asp-controller="Banner" asp-action="index" class="btn btn-danger">İptal Et</a>
-    
+        <div class="form-group">
+
+            <label asp-for="Order">Sıra</label>
+            <input asp-for="Order" class="form-control" id="Order">
+
+            <span asp-validation-for="@Model.Order" class="text-danger"></span>
+        </div>
+
+
+        </br>
+
+        <button class="btn btn-primary" type="submit" style="visibility:visible">Güncelle</button>
+        <a asp-controller="Banner" asp-action="index" class="btn btn-danger">İptal Et</a>
+
+
+
     </form>
 
     <style type="text/css">

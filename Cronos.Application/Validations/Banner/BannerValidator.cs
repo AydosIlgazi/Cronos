@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Cronos.Application.Data.Configurations
 {
     //24.09.2022 İrem Kesemen
-    public class BannerValidator : AbstractValidator<BannerEntity>
+    public class BannerValidator : AbstractValidator<BannerDto>
     {
         public BannerValidator()
         {

@@ -1,4 +1,5 @@
 ﻿using Cronos.Application.Data.Configurations;
+using Cronos.Application.Dtos;
 using Cronos.Application.Entities;
 using Cronos.Application.Features.Banner;
 using Cronos.Application.ViewModels;
@@ -49,18 +50,18 @@ namespace Cronos.Web.Controllers
         //Bannerlerin oluşturulması İrem Kesemen 22/09/20222
 
         [Route("cms/banner/create")]
-        public async Task<IActionResult> Create(SaveBannersCommand command, BannerEntity entity,int id)
+        public async Task<IActionResult> Create(SaveBannersCommand command)
         {
-            BannerValidator validations = new BannerValidator();
-            ValidationResult results = validations.Validate(entity);
+            //BannerValidator validations = new BannerValidator();
+            //ValidationResult results = validations.Validate(entity);
 
-            ModelState.Clear();
+           ModelState.Clear();
             return View();
         }
         [Route("cms/banner/create")]
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SaveBannersCommand command, BannerEntity entity)
+        public async Task<IActionResult> Create(SaveBannersCommand command, BannerDto entity)
         {
 
             BannerValidator validations = new BannerValidator();
@@ -82,7 +83,9 @@ namespace Cronos.Web.Controllers
                 }
                 foreach (ValidationFailure item in result.Errors)
                 {
-                    ModelState.Clear();
+                    //Irem Kesemen 30.09.2022 burada getirilen clear bazı
+                    //validasyonların gelmesini gecersiz kılıyor
+                    //ModelState.Clear();
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                     
                 }

@@ -11,8 +11,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   
     
- 
 
 
 </head>
@@ -23,9 +25,9 @@
             <input asp-for="ImageUrl" class="form-control" id="ImageUrl">
 
              
-            </div>
             @Html.ValidationMessageFor(m=>m.ImageUrl,"", new { @class="text-danger" })
-        </div>
+            </div>
+       
 
         <div class="form-group">
             <label asp-for="AltText">Alt Metin</label>
@@ -56,14 +58,19 @@
         </div>
         <br />
         <div class="form-group">
-            <label asp-for="IsActive">Aktif Mi?</label>
-            @*<input data-val="true"
+            @*<label asp-for="IsActive">Aktif Mi?</label>
+            <input data-val="true"
                    data-val-required="The isActive field is required."
                    id="IsActive"
                    name="IsActive"
                    type="checkbox"
-                   value="true" />*@
-            @Html.CheckBoxFor(m => m.IsActive)
+                   value="true"
+                   />*@
+
+            <label class="form-label" asp-for="@Model.IsActive"></label>
+            <input type="checkbox" asp-for="@Model.IsActive" />
+
+          @*  @Html.CheckBoxFor(m => m.IsActive)*@
         </div>
        @* <div class="form-group" id="IsDeleted">
             <label asp-for="IsActive">Silindi Mi?</label>
