@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Cronos.Application.Validations.Announcement
 {
-    public class AnnouncementValidator : AbstractValidator<UpdateAnnouncementDto>
+    public class AnnouncementValidator : AbstractValidator<AnnouncementUpdateViewModel>
     {
         public AnnouncementValidator()
         {
@@ -15,6 +15,8 @@ namespace Cronos.Application.Validations.Announcement
             RuleFor(x => x.ShortDescription).NotNull().WithMessage("This field is required");
             RuleFor(x => x.Description).NotNull().WithMessage("This field is required");
             RuleFor(x => x.RedirectUrl).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.StartDate).NotNull().WithMessage("This field is required");
+            RuleFor(x => x.EndDate).NotNull().WithMessage("This field is required");
             RuleFor(x => x.ShortDescription).Length(0, 255).WithMessage("Short description must between 0-255 char.");
             RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("End date can not be earlier than start date");
             RuleFor(x => x.StartDate).LessThan(x => x.EndDate).WithMessage("End date can not be earlier than start date");

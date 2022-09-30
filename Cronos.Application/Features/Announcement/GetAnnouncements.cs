@@ -101,12 +101,11 @@ namespace Cronos.Application.Features.Announcement
                     return null;
                 }
 
-                AnnouncementUpdateViewModel announcementViewModel = new()
-                {
-                    Announcement = _mapper.Map<UpdateAnnouncementDto>(announcement)
-                };
-                
-                return announcementViewModel;
+                var announcementDto = new AnnouncementUpdateViewModel(); 
+                    _mapper.Map(announcement, announcementDto);
+
+
+                return announcementDto;
             }
         }
 

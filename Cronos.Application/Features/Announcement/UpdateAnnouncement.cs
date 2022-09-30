@@ -12,12 +12,12 @@ namespace Cronos.Application.Features.Announcement
     {
         public class UpdateAnnouncementCommand : IRequest<bool>
         {
-            public UpdateAnnouncementCommand(UpdateAnnouncementDto obj)
+            public UpdateAnnouncementCommand(AnnouncementUpdateViewModel obj)
             {
                 this.Obj = obj;
             }
 
-            public UpdateAnnouncementDto Obj { get; private set; }
+            public AnnouncementUpdateViewModel Obj { get; private set; }
         }
 
         public class UpdateAnnouncementHandler : IRequestHandler<UpdateAnnouncementCommand, bool>

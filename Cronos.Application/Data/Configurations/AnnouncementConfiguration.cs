@@ -6,7 +6,7 @@ namespace Cronos.Application.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<AnnouncementEntity> builder)
         {
-            builder.Property(b => b.ShortDescription).HasMaxLength(200);
+            builder.Property(b => b.ShortDescription).HasMaxLength(255);
 
         }
     }

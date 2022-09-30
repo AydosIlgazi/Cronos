@@ -89,10 +89,10 @@ namespace Cronos.Web.Controllers
         public async Task<IActionResult> UpdateAnnouncement([FromForm] AnnouncementUpdateViewModel obj)
         {
             AnnouncementValidator validationRules = new AnnouncementValidator();
-            ValidationResult validationResult = validationRules.Validate(obj.Announcement);
+            ValidationResult validationResult = validationRules.Validate(obj);
             if (validationResult.IsValid)
             {
-                bool result =await _mediator.Send(new UpdateAnnouncementCommand(obj.Announcement));
+                bool result =await _mediator.Send(new UpdateAnnouncementCommand(obj));
                 if(result == true)
                 {
                     TempData["success"] = "Announcement updated succesfully.";
@@ -108,7 +108,10 @@ namespace Cronos.Web.Controllers
             {
                 foreach (var state in ModelState.Values)
                 {
-                    state.Errors.Clear();
+                    if (state.Errors.Count > 0)
+                    {
+                        state.Errors.Clear();
+                    }
                 }
                 foreach (var item in validationResult.Errors)
                 {
