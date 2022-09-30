@@ -90,7 +90,55 @@ namespace Cronos.Application.Features.Menu
                     {
                         return false;
                     }
-                    menu.IsDeleted = true;
+
+                    //---delete child parents also menu=> submenu => submenu2 || Ş.Geyik 30.09.22---
+                    var submenus= _context.SubMenus.AsNoTracking().Where(c => c.ParentId == menu.Id);
+                List<int> deletedSubMenusIds=new List<int>();
+
+                    foreach (var submenu in submenus)
+                    {
+                        if (submenu != null)
+                        {
+                        submenu.IsDeleted = true;
+                        submenu.ModifiedDate = DateTime.Now;
+                        _context.SubMenus.Update(submenu);
+
+                        deletedSubMenusIds.Add(submenu.Id);
+                    
+                        }
+
+
+                  
+                    }
+
+                  foreach(var submenuDeletedId in deletedSubMenusIds)
+                {
+
+                    var submenus2 = _context.SubMenus2.AsNoTracking().Where(c => c.ParentId ==submenuDeletedId );
+
+
+                    foreach (var submenu2 in submenus2)
+                    {
+                        if (submenu2 != null)
+                        {
+                            submenu2.IsDeleted = true;
+                            submenu2.ModifiedDate = DateTime.Now;
+                            _context.SubMenus2.Update(submenu2);
+
+                            
+
+                        }
+
+
+
+                    }
+
+                }
+
+                // End ---- delete child parents also menu=> submenu => submenu2 || Ş.Geyik 30.09.22 End ----
+
+
+                menu.IsDeleted = true;
                     menu.ModifiedDate = DateTime.Now;
                     _context.Menus.Update(menu);
                   var isDeleted = await _context.SaveChangesAsync(cancellationToken);

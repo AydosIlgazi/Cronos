@@ -37,7 +37,7 @@
                                     <th>Is Active</th>
                                     <th>Is Deleted</th>
                                     <th>Edit Item</th>
-                                    <th>Delete Item</th>
+                                    <th>Delete|Add Item</th>
                             </thead>
                             <tbody>
                                 @foreach(var menu in Model.Menus){
@@ -57,7 +57,14 @@
                                             <td><input disabled name="IsActive" value="@menu.IsActive" type="checkbox" @(menu.IsActive? "checked" : "") /></td>
                                             <td><input disabled name="IsDeleted" value="@menu.IsDeleted" type="checkbox" @(menu.IsDeleted? "checked" : "") /></td>
                                             <td><a asp-action="editMenu" asp-route-id="@menu.Id" asp class="btn btn-warning">Edit</a></td>
+                                          @{  if(@menu.IsDeleted==true){
+                                            <td><a asp-action="addMenuBack" asp-route-id="@menu.Id" asp class="btn btn-success">Add Back</a></td>
+                                            }
+                                            else{
                                             <td><a asp-action="deleteMenu" asp-route-id="@menu.Id" asp class="btn btn-danger">Delete</a></td>
+                                            }
+                                            
+                                            }
                                         </tr>
                                     
                                 }

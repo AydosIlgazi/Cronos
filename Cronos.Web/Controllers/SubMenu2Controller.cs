@@ -62,7 +62,16 @@ namespace Cronos.Web.Controllers
 
             viewModel.MenuViewModel = await _mediator.Send(new GetAllMenusQuery());
 
-            TempData["maxOrder"] = viewModel.MenuViewModel.SubMenus2.OrderByDescending(menu => menu.Order).First().Order + 1;
+            if (!viewModel.MenuViewModel.Menus.Any())
+            {
+                TempData["maxOrder"] = 1;
+            }
+            else
+            {
+                TempData["maxOrder"] = viewModel.MenuViewModel.Menus.OrderByDescending(menu => menu.Order).First().Order + 1;
+            }
+
+            
 
             return View(viewModel);
         }
@@ -226,6 +235,31 @@ namespace Cronos.Web.Controllers
 
 
         }
+
+
+
+        [Route("cms/menu/addSubMenu2Back/{id:int}")]
+        [HttpGet]
+        public async Task<IActionResult> AddSubMenu2Back(int id)
+        {
+
+            HomeViewModel viewModel = new HomeViewModel();
+
+            viewModel.MenuViewModel = await _mediator.Send(new GetAllMenusQuery());
+
+            var submenu2 = viewModel.MenuViewModel.SubMenus2.Find(menu => menu.Id == id);
+
+            if (submenu2 != null)
+            {
+                submenu2.IsDeleted = false;
+                await _mediator.Send(new UpdateSubMenu2Command(submenu2));
+            }
+
+
+            return RedirectToAction("Edit");
+        }
+
+
 
 
 

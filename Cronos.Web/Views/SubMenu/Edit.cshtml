@@ -59,7 +59,17 @@
                                         <td><input disabled name="IsActive" value="@menu.IsActive" type="checkbox" @(menu.IsActive? "checked" : "") /></td>
                                         <td><input disabled name="IsDeleted" value="@menu.IsDeleted" type="checkbox" @(menu.IsDeleted? "checked" : "") /></td>
                                         <td><a asp-action="editSubMenu" asp-route-id="@menu.Id" asp class="btn btn-warning">Edit</a></td>
-                                        <td><a asp-action="deleteSubMenu" asp-route-id="@menu.Id" asp class="btn btn-danger">Delete</a></td>
+                                    @{
+                                        if (@menu.IsDeleted == true)
+                                        {
+                                            <td><a asp-action="addSubMenuBack" asp-route-id="@menu.Id" asp class="btn btn-success">Add Back</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td><a asp-action="deleteSubMenu" asp-route-id="@menu.Id" asp class="btn btn-danger">Delete</a></td>
+                                        }
+
+                                    }
                                     </tr>
 
                                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cronos.Application.Entities.Menu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,7 @@ namespace Cronos.Application.Features.SubMenu
                 {
                     return false;
                 }
+
 
                 var menuAsDto = request.Obj;
 
@@ -85,6 +87,32 @@ namespace Cronos.Application.Features.SubMenu
                 {
                     return false;
                 }
+
+                //---delete child parents also submenu => submenu2 || Ş.Geyik 30.09.22---
+                var submenus2 = _context.SubMenus2.AsNoTracking().Where(c => c.ParentId == submenu.Id);
+
+
+                foreach (var submenu2 in submenus2)
+                {
+                    if (submenu2 != null)
+                    {
+                        submenu2.IsDeleted = true;
+                        submenu2.ModifiedDate = DateTime.Now;
+                        _context.SubMenus2.Update(submenu2);
+
+
+
+                    }
+
+
+
+                }
+
+
+                //---delete child parents also submenu => submenu2 || Ş.Geyik 30.09.22---
+
+
+
                 submenu.IsDeleted = true;
                 submenu.ModifiedDate = DateTime.Now;
                 _context.SubMenus.Update(submenu);

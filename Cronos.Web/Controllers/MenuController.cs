@@ -55,7 +55,20 @@ namespace Cronos.Web.Controllers
 
             viewModel.MenuViewModel = await _mediator.Send(new GetAllMenusQuery());
 
-            TempData["maxOrder"] = viewModel.MenuViewModel.Menus.OrderByDescending(menu=>menu.Order).First().Order+1;
+            //if there is no row data set first order 1
+            if(!viewModel.MenuViewModel.Menus.Any())
+            {
+                TempData["maxOrder"] = 1;
+            }
+            else
+            {
+                TempData["maxOrder"]=viewModel.MenuViewModel.Menus.OrderByDescending(menu => menu.Order).First().Order + 1;
+            }
+                
+            
+            
+                
+              
 
             return View(viewModel.MenuViewModel);
         }
@@ -229,10 +242,6 @@ namespace Cronos.Web.Controllers
 
 
 
-
-
-
-
         [Route("cms/menu/list")]
         public async Task<IActionResult> List()
         {
@@ -246,18 +255,31 @@ namespace Cronos.Web.Controllers
 
 
 
-        [Route("cms/menu/edit")]
-        [HttpPost]
-        public IActionResult Edit(IFormCollection collection)
+   
+
+
+        [Route("cms/menu/addMenuBack/{id:int}")]
+        [HttpGet]
+        public async Task<IActionResult> AddMenuBack(int id)
         {
 
+            MenuViewModel viewModel = new MenuViewModel();
+            viewModel = await _mediator.Send(new GetMenusQuery());
 
-            System.Diagnostics.Debug.WriteLine("test edit cms/menu/edit");
+            var menu = viewModel.Menus.Find(menu => menu.Id == id);
 
+            if(menu!= null)
+            {
+                menu.IsDeleted = false;
+                await _mediator.Send(new UpdateMenuCommand(menu));
+            }
+          
 
-
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Edit");
         }
+
+
+
 
 
 

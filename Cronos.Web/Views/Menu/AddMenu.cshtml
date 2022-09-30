@@ -54,7 +54,7 @@
             <label for="BitisZamani" class="col-sm-2 col-form-label">Bitiş Zamanı:</label>
             <div class="col-sm-7">
 
-                <input name="EndDate" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" />
+                <input name="EndDate" type="datetime-local" value="@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd HH:mm:ss")" />
 
             </div>
         </div>
