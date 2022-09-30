@@ -18,7 +18,7 @@ namespace Cronos.Application.Data.Configurations
             RuleFor(b => b.StartDate).NotEmpty().WithMessage("Boş bırakılamaz!");
 
 
-            RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("Update Bitiş tarihi başlangıç tarihinden önce olamaz!").NotEmpty().WithMessage("Boş bırakılamaz!");
+            RuleFor(x => x.EndDate).GreaterThan(x => x.StartDate).WithMessage("Bitiş tarihi başlangıç tarihinden önce olamaz!").NotEmpty().WithMessage("Boş bırakılamaz!");
 
 
             RuleFor(x => x.AltText).NotEmpty().WithMessage("Boş bırakılamaz!");

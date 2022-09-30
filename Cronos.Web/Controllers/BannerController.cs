@@ -65,7 +65,7 @@ namespace Cronos.Web.Controllers
 
             BannerValidator validations = new BannerValidator();
             ValidationResult result = validations.Validate(entity);
-            if (ModelState.IsValid)
+            if (result.IsValid)
             {
 
                 TempData["success"] = "İşlem Başarılı";
@@ -75,6 +75,11 @@ namespace Cronos.Web.Controllers
             }
             else
             {
+                foreach (var state in ModelState.Values)
+                {
+                    if (state.Errors.Count > 0)
+                        state.Errors.Clear();
+                }
                 foreach (ValidationFailure item in result.Errors)
                 {
                     ModelState.Clear();
@@ -82,11 +87,6 @@ namespace Cronos.Web.Controllers
                     
                 }
 
-                //foreach (var state in ModelState.Values)
-                //{
-                //    if (state.Errors.Count > 0)
-                //        state.Errors.Clear();
-                //}
 
             }
             return View() ;
@@ -96,12 +96,12 @@ namespace Cronos.Web.Controllers
 
         [HttpGet]
         [Route("cms/banner/update/{id:int}")]
-        public async Task<IActionResult> Update(int id,BannerUpdateViewModel entity)
+        public async Task<IActionResult> Update(int id, UpdateBannersCommand entity)
         {
             //TempData["success"] = "İşlem Başarılı!";
             ModelState.Clear();
-            UpdateBannerValidator validations = new UpdateBannerValidator();
-            ValidationResult results = validations.Validate(entity);
+            //UpdateBannerValidator validations = new UpdateBannerValidator();
+            //ValidationResult results = validations.Validate(entity);
 
             var viewModel = await _mediator.Send(new GetBannerById { Id = id });
             return View(viewModel);
@@ -116,7 +116,7 @@ namespace Cronos.Web.Controllers
             }
             UpdateBannerValidator validations = new UpdateBannerValidator();
             ValidationResult results = validations.Validate(entity);
-            if (ModelState.IsValid)
+            if (results.IsValid)
             {
 
                 TempData["success"] = "İşlem Başarılı!";
@@ -125,7 +125,14 @@ namespace Cronos.Web.Controllers
                // return RedirectToAction("Index", "Banner", new { @viewModel = viewModel });
             }
             else
+
             {
+                foreach (var state in ModelState.Values)
+                {
+                    if (state.Errors.Count > 0)
+                        state.Errors.Clear();
+                }
+
                 foreach (ValidationFailure items in results.Errors)
                 {
                     ModelState.AddModelError(items.PropertyName, items.ErrorMessage);
