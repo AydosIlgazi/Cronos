@@ -19,7 +19,7 @@ namespace Cronos.Application.Features.Activity
         public bool IsDeleted { get; set; }
         public string Title { get; set; }
         public string Info { get; set; }
-        public string locationUrl { get; set; }
+        public string? locationUrl { get; set; }
 
         public class UpdateActivityHandler : IRequestHandler<UpdateActivityCommand, bool>
         {
