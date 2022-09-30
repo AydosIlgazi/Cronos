@@ -13,7 +13,7 @@ namespace Cronos.Web.Controllers
             _mediator = mediator;
         }
 
-        [Route("contentpage/{url}")]
+     
         public async Task<IActionResult> Index(string url)
         {
             GetContentPageQuery query = new GetContentPageQuery()

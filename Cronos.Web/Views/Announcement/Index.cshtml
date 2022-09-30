@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Cronos.Application.ViewModels
+@model AnnouncementViewModel
+
+
+<div>
+    <div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <label><a asp-controller="Announcement" asp-action="SaveAnnouncement" class="btn btn-success">create</a></label>
+                    </th>
+                    <th>
+                        <label>Order</label>
+                    </th>
+                    <th>
+                        <label>Header</label>
+                    </th>
+                    <th>
+                        <label>Delete</label>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+               @foreach(var obj in Model.Announcements){
+                    <tr>
+                        <td width="10%"><a asp-controller="Announcement" asp-action="UpdateAnnouncement" asp-route-id="@obj.Id" class="btn btn-primary">edit </a></td>
+                        <td width="10%">@obj.Order</td>
+                        <td width="70%">@obj.Header</td>
+                        @if(!obj.IsDeleted){
+                            <td width="10%"><a asp-controller="Announcement" asp-action="DeleteAnnouncement" asp-route-id="@obj.Id" class="btn btn-danger">delete</a></td>
+                        }else{
+                            <td width="10%"><a asp-controller="Announcement" asp-action="DeleteAnnouncement" asp-route-id="@obj.Id" class="btn btn-primary">add</a></td>
+                        }
+                        
+                    </tr>
+               }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<partial name="_Notification" />
+
